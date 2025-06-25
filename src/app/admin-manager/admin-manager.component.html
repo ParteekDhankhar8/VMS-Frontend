@@ -1,0 +1,74 @@
+<div class="container mt-5">
+  <h2 class="text-center text-primary mb-4">Availability Update</h2>
+ 
+  <div class="table-responsive">
+    <table class="vaccine-table">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>City</th>
+          <th>Vaccine</th>
+          <th>Availability</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+<tbody>
+  <ng-container *ngFor="let state of getStates()">
+    <ng-container *ngFor="let city of getCities(state)">
+      <ng-container *ngFor="let vaccine of getVaccines(state, city)">
+        <tr>
+          <td *ngIf="!isEditingRow(state, city, vaccine)">{{ state }}</td>
+          <td *ngIf="isEditingRow(state, city, vaccine)">
+            <input [(ngModel)]="editState" class="form-control" />
+          </td>
+ 
+          <td *ngIf="!isEditingRow(state, city, vaccine)">{{ city }}</td>
+          <td *ngIf="isEditingRow(state, city, vaccine)">
+            <input [(ngModel)]="editCity" class="form-control" />
+          </td>
+ 
+          <td *ngIf="!isEditingRow(state, city, vaccine)">{{ vaccine }}</td>
+          <td *ngIf="isEditingRow(state, city, vaccine)">
+            <input [(ngModel)]="editVaccine" class="form-control" />
+          </td>
+ 
+          <td *ngIf="!isEditingRow(state, city, vaccine)">
+            {{ vaccineData[state][city][vaccine] }}
+          </td>
+          <td *ngIf="isEditingRow(state, city, vaccine)">
+            <input type="number" [(ngModel)]="editAvailability" class="form-control" />
+          </td>
+ 
+          <td class="action-links">
+            <a href="#" class="text-primary" (click)="startEditing(state, city, vaccine); $event.preventDefault()">Edit</a> |
+            <a href="#" class="text-danger" (click)="deleteRow(state, city, vaccine); $event.preventDefault()">Delete</a>
+            <a *ngIf="isEditingRow(state, city, vaccine)" href="#" class="text-danger" (click)="saveRow(state, city, vaccine); $event.preventDefault()">Save</a>
+            <a *ngIf="isEditingRow(state, city, vaccine)" href="#" class="text-secondary" (click)="cancelEdit(); $event.preventDefault()">Cancel</a>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+ 
+  <!-- 🔽 Add Row at the End -->
+  <tr *ngIf="isAdding">
+    <td><input class="form-control" [(ngModel)]="newState" placeholder="Enter State" /></td>
+    <td><input class="form-control" [(ngModel)]="newCity" placeholder="Enter City" /></td>
+    <td><input class="form-control" [(ngModel)]="newVaccine" placeholder="Enter Vaccine" /></td>
+    <td><input class="form-control" type="number" [(ngModel)]="newAvailability" placeholder="Availability" /></td>
+    <td class="action-links">
+      <a href="#" class="text-success" (click)="saveNewRow(); $event.preventDefault()">Save</a> |
+      <a href="#" class="text-secondary" (click)="cancelAdd(); $event.preventDefault()">Cancel</a>
+    </td>
+  </tr>
+</tbody>
+ 
+    </table>
+  </div>
+ 
+  <!-- Buttons Below Table -->
+  <div class="update-button-wrapper mt-3">
+    <!-- <button class="btn btn-success btn-action" (click)="updateAvailability()">Update Availability</button> -->
+    <button class="btn btn-primary btn-action" (click)="startAdding()" [disabled]="isAdding">Add Row</button>
+  </div>
+</div>

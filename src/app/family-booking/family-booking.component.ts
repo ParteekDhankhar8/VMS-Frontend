@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./family-booking.component.css']
 })
 export class FamilyBookingComponent implements OnInit {
+  constructor(private router: Router) {}
+
   vaccineTypes: string[] = ['Covishield', 'Polio'];
   states: string[] = ['Maharashtra', 'Karnataka'];
   familyMembers: string[] = ['Father', 'Mother', 'Brother', 'Sister', 'Other'];
@@ -15,7 +19,7 @@ export class FamilyBookingComponent implements OnInit {
     'Maharashtra': ['Pune', 'Mumbai'],
     'Karnataka': ['Bangalore', 'Mysore']
   };
-
+  recipientName: string = '';
   selectedVaccine: string = '';
   selectedState: string = '';
   selectedCity: string = '';
@@ -73,13 +77,15 @@ export class FamilyBookingComponent implements OnInit {
       !this.selectedCity ||
       !this.selectedDate ||
       !this.selectedTime ||
-      !this.selectedMember
+      !this.selectedMember ||
+      !this.recipientName
     ) {
       alert('Please fill all details before booking.');
     } else {
       alert(
-        `✅ Appointment booked for ${this.selectedVaccine} (${this.selectedMember}) in ${this.selectedCity}, ${this.selectedState} on ${this.selectedDate} at ${this.selectedTime}`
+        `✅ Appointment booked for ${this.recipientName} (${this.selectedMember}) for ${this.selectedVaccine}  in ${this.selectedCity}, ${this.selectedState} on ${this.selectedDate} at ${this.selectedTime}`
       );
+      this.router.navigate(['/view-booking']);
     }
   }
 }

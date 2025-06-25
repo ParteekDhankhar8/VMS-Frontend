@@ -14,6 +14,7 @@ import { BookingComponent } from './booking/booking.component';
 import { FamilyBookingComponent } from './family-booking/family-booking.component';
 import { ViewBookingComponent } from './view-booking/view-booking.component';
 import { CertificateComponent } from './certificate/certificate.component';
+import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
 {path: 'family-booking', component: FamilyBookingComponent},
 {path:'view-booking', component: ViewBookingComponent},
 {path:'certificate',component:CertificateComponent},
+{path:'admin-dashboard',component: AdmindashboardComponent},
 
 
   // Wildcard route for unknown paths

@@ -25,6 +25,10 @@ import { BookingComponent } from './booking/booking.component';
 import { FamilyBookingComponent } from './family-booking/family-booking.component';
 import { ViewBookingComponent } from './view-booking/view-booking.component';
 import { CertificateComponent } from './certificate/certificate.component';
+import { UsertableComponent } from './usertable/usertable.component';
+import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
+import { AdminManagerComponent } from './admin-manager/admin-manager.component';
+import { AddslotComponent } from './addslot/addslot.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { CertificateComponent } from './certificate/certificate.component';
     BookingComponent,
     FamilyBookingComponent,
     ViewBookingComponent,
-    CertificateComponent
+    CertificateComponent,
+    UsertableComponent,
+    AdmindashboardComponent,
+    AdminManagerComponent,
+    AddslotComponent
   ],
   imports: [
     BrowserModule,

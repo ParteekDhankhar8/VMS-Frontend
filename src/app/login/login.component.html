@@ -2,7 +2,7 @@
   <div class="login-border-wrapper w-100" style="max-width: 460px;">
     <div class="card p-4 shadow-lg">
 
-      <h2 class="text-center text-primary fw-bold mb-3">{{loginRole}} Login</h2>
+      <h2 class="text-center text-primary fw-bold mb-3">{{ loginRole === 'admin' ? 'Admin Login' : 'User Login' }}</h2>
 
       <!-- Only User Login Card -->
       <!-- <div class="d-flex flex-row justify-content-between mb-4" style="gap: 1rem;">
@@ -11,6 +11,8 @@
           <div>User</div>
         </div>
       </div> -->
+
+
 
       <!-- Login Form -->
       <form (ngSubmit)="onLogin()" #loginForm="ngForm">
@@ -62,9 +64,9 @@
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary w-100 btn-hover" [disabled]="!loginForm.valid || captchaStatus !== 'valid'">
-          Login as User
+          Login as {{ loginRole === 'admin' ? 'Admin ' : 'User ' }}
         </button>
-        <div class="text-center mt-3">
+        <div class="text-center mt-3" *ngIf="loginRole !== 'admin'">
           <a href="/register" class="fw-medium text-secondary">Don’t have an account? Sign up</a>
         </div>
       </form>

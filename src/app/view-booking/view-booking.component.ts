@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 })
 export class ViewBookingComponent {
 userBookings = [
-    { name: 'Alice', vaccine: 'Covaxin', date: '2025-06-25', time: '09:00 AM', location: 'Chennai' },
-    { name: 'John', vaccine: 'Covishield', date: '2025-06-26', time: '10:00 AM', location: 'Delhi' }
+    { name: 'Alice', vaccine: 'Covaxin', date: '2025-06-25', time: '09:00 AM', location: 'Chennai' }
+    
   ];
  
   familyBookings = [

@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <h3 class="text-primary text-center mb-4">Users Booking</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped text-center">
+      <thead class="thead-dark">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.city }}</td>
+          <td>{{ user.state }}</td>
+          <td>
+            <a href="#" class="text-info mr-3" (click)="viewProfile(user); $event.preventDefault()">View Profile</a>
+            <a href="#" class="text-danger" (click)="deleteUser(i); $event.preventDefault()">Delete</a>
+          </td>
+        </tr>
+        <tr *ngIf="users.length === 0">
+          <td colspan="6" class="text-muted">No users available.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

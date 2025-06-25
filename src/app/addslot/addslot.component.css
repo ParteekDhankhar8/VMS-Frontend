@@ -1,0 +1,97 @@
+/* Container */
+.container {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.1);
+}
+ 
+/* Heading */
+h2 {
+  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+ 
+/* Table Styling */
+.vaccine-table {
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+}
+ 
+.vaccine-table thead {
+  background-color: #007bff;
+  color: #ffffff;
+}
+ 
+.vaccine-table th,
+.vaccine-table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+}
+ 
+.vaccine-table td ul {
+  padding-left: 18px;
+  margin-bottom: 0;
+}
+ 
+/* Actions */
+.action-links a {
+  margin-right: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+ 
+.action-links a.text-primary:hover {
+  color: #0056b3;
+}
+.action-links a.text-danger:hover {
+  color: #c82333;
+}
+.action-links a.text-success:hover {
+  color: #218838;
+}
+.action-links a.text-secondary:hover {
+  color: #6c757d;
+}
+ 
+/* Dropdown styling */
+select.form-control[multiple] {
+  height: 120px;
+  border: 1px solid #007bff;
+  box-shadow: none;
+}
+ 
+/* Button Styling */
+.update-button-wrapper {
+  margin-top: 20px;
+}
+ 
+.update-button-wrapper .btn-primary {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 6px;
+  background-color: #007bff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+ 
+.update-button-wrapper .btn-primary:hover {
+  background-color: #0056b3;
+}
+ 
+/* Input fields */
+input.form-control {
+  border: 1px solid #007bff;
+  box-shadow: none;
+}
+ 
+input.form-control:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}

@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar py-4">
+      <div class="sidebar-sticky">
+        <!-- <h2 class="text-center text-primary mb-4">Admin Dashboard</h2> -->
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+               [class.active]="selectedTab === 'home'"
+               (click)="selectTab('home'); $event.preventDefault()">
+               Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+               [class.active]="selectedTab === 'update'"
+               (click)="selectTab('update'); $event.preventDefault()">
+               Vaccination Update
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+               [class.active]="selectedTab === 'bookings'"
+               (click)="selectTab('bookings'); $event.preventDefault()">
+               User Bookings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+               [class.active]="selectedTab === 'addslots'"
+               (click)="selectTab('addslots'); $event.preventDefault()">
+               Add Slots
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+ 
+    <!-- Main Content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="pt-4">
+        <h1 class="mb-4 text-dark border-bottom pb-2 text-center">Admin Dashboard</h1>
+ 
+        <div *ngIf="selectedTab === 'home'">
+          <h4 class="mb-3 text-secondary"> Home</h4>
+          <p class="text-muted">Here you can manage current vaccine inventory levels.</p>
+          <!-- Stock content goes here -->
+        </div>
+ 
+        <div *ngIf="selectedTab === 'update'">
+          <!-- <h4 class="mb-3 text-secondary"> Vaccination Update</h4>
+          <p class="text-muted">Update vaccine availability and scheduling data.</p> -->
+          <app-admin-manager></app-admin-manager>
+        </div>
+ 
+        <div *ngIf="selectedTab === 'bookings'">
+          <!-- <h4 class="mb-3 text-secondary"> User Bookings</h4>
+          <p class="text-muted">Manage and view user appointment bookings.</p> -->
+          <app-usertable></app-usertable>
+        </div>
+        <div *ngIf="selectedTab === 'addslots'">
+          <!-- <h4 class="mb-3 text-secondary"> User Bookings</h4>
+          <p class="text-muted">Manage and view user appointment bookings.</p> -->
+          <app-addslot></app-addslot>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
