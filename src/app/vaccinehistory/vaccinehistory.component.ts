@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class VaccinehistoryComponent {
 
 vaccinationData = [
-    { name: 'Covaxin', date: '2025-06-01', status: 'Taken' },
+    { name: 'Covaxin', date: '2025-06-01', status: 'Taken', },
     { name: 'Covishield', date: '2025-06-15', status: 'Remaining' },
     { name: 'Sputnik', date: '2025-05-20', status: 'Deleted' },
  { name: 'Covax', date: '2025-06-01', status: 'Taken' },
