@@ -1,0 +1,141 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+}
+
+.custom-input {
+  border-radius: 10px;
+  border: 2px solid #dee2e6;
+  background-color: #fdfdfd;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.25);
+}
+
+.btn-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+h3 {
+  font-weight: bold;
+}
+
+/* Blue border for login wrapper, no animation */
+.login-border-wrapper {
+  padding: 4px;
+  border-radius: 20px;
+  border: 3px solid #0d6efd;
+  background: #fff;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16px;
+  border: none;
+}
+
+.reset-option-card {
+  flex: 1;
+  text-align: center;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.reset-option-card:hover {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.reset-option-card.active {
+  border: 2px solid #0d6efd;
+  background-color: #e7f1ff;
+}
+
+.invalid-feedback small {
+  color: #dc3545;
+}
+
+.text-success {
+  color: #198754 !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+a {
+  font-size: medium;
+}
+
+/* Center the login cards vertically and horizontally */
+.vh-100 {
+  min-height: 100vh;
+  height: 100vh;
+  margin:-4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Make row and cards responsive */
+.row.justify-content-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+}
+
+.col-md-6 {
+  flex: 0 0 45%;
+  max-width: 45%;
+  min-width: 320px;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 991px) {
+  .row.justify-content-center {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .col-md-6 {
+    max-width: 90%;
+    flex: 0 0 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 8px;
+  }
+  .col-md-6 {
+    max-width: 100%;
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+  .card {
+    padding: 1rem !important;
+  }
+}

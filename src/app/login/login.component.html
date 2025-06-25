@@ -1,0 +1,82 @@
+<div class="vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div class="login-border-wrapper w-100" style="max-width: 460px;">
+    <div class="card p-4 shadow-lg">
+
+      <h2 class="text-center text-primary fw-bold mb-3">{{loginRole}} Login</h2>
+
+      <!-- Only User Login Card -->
+      <!-- <div class="d-flex flex-row justify-content-between mb-4" style="gap: 1rem;">
+        <div class="reset-option-card flex-fill active">
+          <i class="fas fa-user fa-lg mb-2 text-primary"></i>
+          <div>User</div>
+        </div>
+      </div> -->
+
+      <!-- Login Form -->
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+        <!-- Email Field -->
+        <div class="form-group mb-3">
+          <label class="form-label fw-medium">Email address</label>
+          <input type="email" class="form-control custom-input" [(ngModel)]="loginEmail" name="loginEmail" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" #emailRef="ngModel" />
+          <div *ngIf="emailRef.invalid && emailRef.touched" class="invalid-feedback d-block">
+            <small *ngIf="emailRef.errors?.['required']">Email is required</small>
+            <small *ngIf="emailRef.errors?.['pattern']">Enter a valid email address</small>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group mb-3">
+          <label class="form-label fw-medium">Password</label>
+          <input type="password" class="form-control custom-input" [(ngModel)]="loginPassword" name="loginPassword" required minlength="6" #passwordRef="ngModel" />
+          <div *ngIf="passwordRef.invalid && passwordRef.touched" class="invalid-feedback d-block">
+            <small *ngIf="passwordRef.errors?.['required']">Password is required</small>
+            <small *ngIf="passwordRef.errors?.['minlength']">Minimum 6 characters</small>
+          </div>
+        </div>
+
+        <!-- CAPTCHA -->
+        <div class="form-group mb-3">
+          <label class="form-label fw-medium">CAPTCHA</label>
+          <div class="d-flex mb-2">
+            <input type="text" class="form-control text-center" style="width: 50%; margin-right: 0.5rem;" [value]="captchaCode" disabled />
+            <input type="text" [(ngModel)]="userCaptcha" name="userCaptcha" class="form-control text-center" style="width: 50%;" maxlength="6" required pattern="[A-Za-z0-9]{6}" />
+          </div>
+          <div class="d-flex mb-2">
+            <button type="button" class="btn btn-outline-info btn-sm w-50" style="margin-right: 0.5rem;" (click)="generateCaptcha()">
+              Refresh CAPTCHA
+            </button>
+            <button type="button" class="btn btn-outline-success btn-sm w-50" (click)="verifyCaptcha()" [disabled]="!userCaptcha">
+              Verify CAPTCHA
+            </button>
+          </div>
+          <div *ngIf="captchaStatus" class="mt-2 small fw-semibold text-center"
+               [ngClass]="{'text-success': captchaStatus === 'valid', 'text-danger': captchaStatus === 'invalid'}">
+            {{ captchaStatus === 'valid' ? 'CAPTCHA verified successfully' : 'CAPTCHA does not match' }}
+          </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="text-end mb-3">
+          <a href="/forgot-password" class="text-decoration-none small fw-medium text-primary">Forgot password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100 btn-hover" [disabled]="!loginForm.valid || captchaStatus !== 'valid'">
+          Login as User
+        </button>
+        <div class="text-center mt-3">
+          <a href="/register" class="fw-medium text-secondary">Don’t have an account? Sign up</a>
+        </div>
+      </form>
+
+      <!-- Message Display -->
+      <div *ngIf="loginMessage" class="mt-3 text-center fw-bold" [ngClass]="'text-' + loginMessageColor">
+        {{ loginMessage }}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,27 @@
+<div class="table-container">
+  <h3 class="text-primary mb-6">Vaccination History</h3>
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Vaccine Name</th>
+        <th>Date </th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vaccine of vaccinationData | slice:currentIndex:currentIndex+3">
+        <td>{{ vaccine.name }}</td>
+        <td>{{ vaccine.date }}</td>
+        <td>{{ vaccine.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-arrows">
+    <button class="btn btn-outline-primary me-2" (click)="prevPage()" [disabled]="currentIndex === 0">
+      &#8592;
+    </button>
+    <button class="btn btn-outline-primary" (click)="nextPage()" [disabled]="currentIndex + 3 >= vaccinationData.length">
+      &#8594;
+    </button>
+  </div>
+</div>

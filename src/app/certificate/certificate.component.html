@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <h4 class="mb-3">Your Vaccination Bookings</h4>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Vaccine</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Certificate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.vaccineName }}</td>
+        <td>{{ booking.slotDate | date }}</td>
+        <td>{{ booking.status }}</td>
+        <td>
+          <button 
+            *ngIf="booking.status === 'taken'" 
+            class="btn btn-success btn-sm" 
+            (click)="downloadCertificate(booking)">
+            Download
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
