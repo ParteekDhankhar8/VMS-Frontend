@@ -29,6 +29,10 @@ import { UsertableComponent } from './usertable/usertable.component';
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 import { AdminManagerComponent } from './admin-manager/admin-manager.component';
 import { AddslotComponent } from './addslot/addslot.component';
+import { AddvaccineComponent } from './addvaccine/addvaccine.component';
+import { UsersidebarComponent } from './usersidebar/usersidebar.component';
+import { RescheduleviewComponent } from './rescheduleview/rescheduleview.component';
+import { ReschedulebookComponent } from './reschedulebook/reschedulebook.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,11 @@ import { AddslotComponent } from './addslot/addslot.component';
     UsertableComponent,
     AdmindashboardComponent,
     AdminManagerComponent,
-    AddslotComponent
+    AddslotComponent,
+    AddvaccineComponent,
+    UsersidebarComponent,
+    RescheduleviewComponent,
+    ReschedulebookComponent
   ],
   imports: [
     BrowserModule,

@@ -1,143 +1,59 @@
-// import { Component, OnInit } from '@angular/core';
-// import { Router, ActivatedRoute } from '@angular/router';
-
-
-
-// @Component({
-//   selector: 'app-login',
-//   templateUrl: './login.component.html',
-//   styleUrls: ['./login.component.css']
-// })
-// export class LoginComponent implements OnInit {
-
-//   loginRole: 'user' | 'admin' = 'user';  
-//   loginEmail: string = '';
-//   loginPassword: string = '';
-//   loginMessage: string = '';
-//   loginMessageColor: 'success' | 'danger' = 'success';
-//   keyRole : string = 'user'; 
-
- 
-//   captchaCode: string = '';
-//   userCaptcha: string = '';
-//   captchaStatus: 'valid' | 'invalid' | '' = '';
-
-//   constructor(
-//     private router: Router,
-//     private route: ActivatedRoute,
-//   ) {}
-
-
- 
-
-//   ngOnInit(): void {
-//     this.generateCaptcha();
-
-//     this.route.queryParams.subscribe(params => {
-//       const role = params['role'];
-//       if (role === 'admin' || role === 'user') {
-//         this.loginRole = role as 'user' | 'admin';
-//         console.log('Selected role from query params:', this.loginRole);
-//         this.selectRole(role);
-//       }
-//     });
-//   }
-
-//   selectRole(role: 'user' | 'admin') {
-//     this.loginRole = role;
-//     this.loginEmail = '';
-//     this.loginPassword = '';
-//     this.userCaptcha = '';
-//     this.captchaStatus = '';
-//     this.loginMessage = '';
-//     this.generateCaptcha();
-
-//     if (role === 'admin') {
-//       this.router.navigate([], { queryParams: { role: 'admin' } });
-//     }
-//   }
-
-//   generateCaptcha(): void {
-//     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-//     this.captchaCode = Array.from({ length: 6 }, () =>
-//       chars[Math.floor(Math.random() * chars.length)]
-//     ).join('');
-//     this.userCaptcha = '';
-//     this.captchaStatus = '';
-//   }
-
-//   verifyCaptcha(): void {
-//     this.captchaStatus = (this.userCaptcha.toUpperCase() === this.captchaCode)
-//       ? 'valid'
-//       : 'invalid';
-//   }
-
-//   onLogin(): void {
-   
-//     if (!this.loginEmail || this.loginPassword.length < 6) {
-//       this.loginMessage = 'Enter a valid email and password (min 6 characters)';
-//       this.loginMessageColor = 'danger';
-//       return;
-//     }
-
-//     if (this.loginRole === 'admin') {
-
-//     this.router.navigate(['/admin-card']);
-//     this.router.navigate(['/admin-dashboard']); 
-//   } else if (this.loginRole === 'user') {
-//     this.router.navigate(['/user-dashboard']); 
-//   }
-
-//   this.loginMessage = `Logged in as ${this.loginRole}`;
-//   this.loginMessageColor = 'success';
-//   }
-  
-// }
-
-
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-
+import { LoginserviceService } from '../services/loginservice.service'
+import { LoginPayload } from '../services/loginservice.service';
+ 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  loginRole: 'user' | 'admin' = 'user';  // Default to 'user'
+ 
+  loginRole: 'User' | 'Admin' = 'User';  // Default to 'user'
   loginEmail: string = '';
   loginPassword: string = '';
   loginMessage: string = '';
   loginMessageColor: 'success' | 'danger' = 'success';
-  keyRole: string = 'user'; // Optional: used for extra logic
-
+ 
   // CAPTCHA
   captchaCode: string = '';
   userCaptcha: string = '';
   captchaStatus: 'valid' | 'invalid' | '' = '';
-
+ 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private loginService: LoginserviceService // Inject the service
   ) {}
-
+ 
   ngOnInit(): void {
     this.generateCaptcha();
-
-    // Get ?role=admin or ?role=user from query params
+ 
     this.route.queryParams.subscribe(params => {
-      const role = params['role']?.toLowerCase();
-      if (role === 'admin' || role === 'user') {
-        this.loginRole = role;
+      console.log('Query Params:', params);
+      const role = params['role'];
+      if (role === 'Admin' || role === 'User') {
+        this.loginRole = role as 'User' | 'Admin';
         console.log('Selected role from query params:', this.loginRole);
-        // No need to call selectRole here unless you want to reset form
+        this.selectRole(role);
       }
     });
   }
-
+ 
+  selectRole(role: 'User' | 'Admin') {
+    this.loginRole = role;
+    this.loginEmail = '';
+    this.loginPassword = '';
+    this.userCaptcha = '';
+    this.captchaStatus = '';
+    this.loginMessage = '';
+    this.generateCaptcha();
+ 
+    // Update URL query param without reload
+    this.router.navigate([], { queryParams: { role } });
+  }
+ 
   generateCaptcha(): void {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     this.captchaCode = Array.from({ length: 6 }, () =>
@@ -146,38 +62,68 @@ export class LoginComponent implements OnInit {
     this.userCaptcha = '';
     this.captchaStatus = '';
   }
-
+ 
   verifyCaptcha(): void {
     this.captchaStatus = (this.userCaptcha.toUpperCase() === this.captchaCode)
       ? 'valid'
       : 'invalid';
   }
-
+ 
   onLogin(): void {
-    // Simple validation
+    // Basic validations
     if (!this.loginEmail || this.loginPassword.length < 6) {
       this.loginMessage = 'Enter a valid email and password (min 6 characters)';
       this.loginMessageColor = 'danger';
       return;
     }
-
+ 
     if (this.captchaStatus !== 'valid') {
-      this.loginMessage = 'Please verify CAPTCHA before login';
+      this.loginMessage = 'Please enter valid CAPTCHA code.';
       this.loginMessageColor = 'danger';
       return;
     }
-
-    // Simulate login success
-    this.authService.login(this.loginRole);  // Save role in AuthService
-
-    if (this.loginRole === 'admin') {
-      this.router.navigate(['/admin-dashboard']);  // or your desired admin page
-    } else {
-      this.router.navigate(['/user-dashboard']);  // or your desired user page
+ 
+    const payload: LoginPayload = {
+      email: this.loginEmail,
+      password: this.loginPassword
+    };
+ 
+    if (this.loginRole === 'Admin') {
+      // Call admin login API
+      this.loginService.adminLogin(payload).subscribe({
+        next: (res) => {
+          console.log('Login Response:', res);
+          this.loginMessage = res.message || 'Admin login successful';
+          this.loginMessageColor = 'success';
+          alert('Admin login successful');
+          localStorage.setItem("currentUser",JSON.stringify(res));
+          this.router.navigate(['/admin-dashboard']); // Reload to ensure admin dashboard is fresh// Force reload to ensure admin dashboard is fresh
+        },
+        error: (err) => {
+          console.error('Login Error:', err);
+          this.loginMessage = err.error?.message || 'Admin login failed';
+          this.loginMessageColor = 'danger';
+          this.generateCaptcha(); // Refresh captcha on error
+        }
+      });
+    } else if (this.loginRole === 'User') {
+      // Call user login API
+      this.loginService.userLogin(payload).subscribe({
+        next: (res) => {
+          this.loginMessage = res.message || 'User login successful';
+          this.loginMessageColor = 'success';
+          alert('User login successful');
+          localStorage.setItem("currentUser",JSON.stringify(res));
+          this.router.navigate(['/user-dashboard']);
+        },
+        error: (err) => {
+          console.error('Login Error:', err);
+          this.loginMessage = err.error?.message || 'User login failed';
+          this.loginMessageColor = 'danger';
+          this.generateCaptcha(); // Refresh captcha on error
+        }
+      });
     }
-
-    this.loginMessage = `Logged in as ${this.loginRole}`;
-    this.loginMessageColor = 'success';
   }
 }
-
+ 

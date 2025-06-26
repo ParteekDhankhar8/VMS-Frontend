@@ -20,4 +20,10 @@ describe('AddslotComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a list of vaccines', () => {
+    expect(component.vaccineList).toEqual(['Covaxin', 'Covishield', 'Sputnik V', 'Pfizer', 'Moderna']);
+  });
 });
+
+

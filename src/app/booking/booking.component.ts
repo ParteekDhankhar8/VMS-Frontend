@@ -130,7 +130,7 @@ export class BookingComponent implements OnInit {
 
   onVaccineChange() {
     this.availableTimes = this.selectedVaccine ? this.vaccineAvailability[this.selectedVaccine] : [];
-    this.selectedTime = '';
+    
   }
 
   onStateChange() {
@@ -159,7 +159,7 @@ export class BookingComponent implements OnInit {
   }
 
   bookAppointment() {
-    if (!this.selectedVaccine || !this.selectedState || !this.selectedCity || !this.selectedDate || !this.selectedTime) {
+    if (!this.selectedVaccine || !this.selectedState || !this.selectedCity || !this.selectedDate) {
       alert('❌ Please fill all details before booking.');
     } else {
       const booking = {
@@ -167,13 +167,13 @@ export class BookingComponent implements OnInit {
         state: this.selectedState,
         city: this.selectedCity,
         date: this.selectedDate,
-        time: this.selectedTime
+        
       };
 
       // Save to localStorage to prevent multiple bookings
       localStorage.setItem('singleBooking', JSON.stringify(booking));
 
-      alert(`✅ Appointment booked for ${this.selectedVaccine} in ${this.selectedCity}, ${this.selectedState} on ${this.selectedDate} at ${this.selectedTime}`);
+      alert(`✅ Appointment booked for ${this.selectedVaccine} in ${this.selectedCity}, ${this.selectedState} on ${this.selectedDate} `);
       this.router.navigate(['/view-booking']);
     }
   }

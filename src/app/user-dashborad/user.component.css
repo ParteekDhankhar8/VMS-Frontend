@@ -6,7 +6,7 @@
   right: 0;
   z-index: 1000;
 } */
-.card-with-image .card-flex {
+/* .card-with-image .card-flex {
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -30,22 +30,22 @@
 }
 
 .scrollable-container {
-  height: 100vh;           /* Full viewport height */
-  width: 100vw;            /* Full viewport width */
+  height: 100vh;           
+  width: 100vw;            
   max-height: 90vh;
   max-width: 100vw;
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 8px;
-  direction: ltr; /* <-- Set to ltr to keep scrollbar on the right */
+  direction: ltr; 
 }
 
-/* Remove the direction override for children */
+
 .scrollable-container > * {
   direction: ltr;
 }
 
-/* Optional: Style the right scrollbar */
+
 .scrollable-container::-webkit-scrollbar {
   width: 8px;
   background: #e0e0e0;
@@ -54,7 +54,7 @@
 
 
 .scrollable-container {
-  scrollbar-color: #1976d2 #e0e0e0; /* For Firefox */
+  scrollbar-color: #1976d2 #e0e0e0; 
   scrollbar-width: thin;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .card-hover-shadow:hover {
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); /* shadow-lg */
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); 
 }
 
 .card-bordered {
@@ -89,7 +89,7 @@
   }
 }
 
-/* Responsive: stack image above content on small screens */
+
 @media (max-width: 600px) {
   .card-with-image .card-flex {
     flex-direction: column;
@@ -124,11 +124,42 @@
   box-shadow: 0 4px 16px rgba(13, 110, 253, 0.15);
 }
 
-/* Responsive: make button full width on small screens */
+
 @media (max-width: 600px) {
   .styled-btn {
     width: 100%;
     font-size: 0.98rem;
     padding: 0.7rem 1rem;
   }
+} */
+
+
+
+
+
+
+
+
+.booking-wrapper {
+  max-width: 100%;
+  overflow: hidden;           /* Prevent content from overflowing */
+  padding: 1rem;
+  margin: 2rem;
+  box-sizing: border-box;
+}
+ 
+.booking-container {
+  width: 80%;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+ 
+.fixed-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
 }

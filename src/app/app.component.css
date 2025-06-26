@@ -1,5 +1,5 @@
 
-.footer {
+/* .footer {
   background-color: #f1f1f1;
   color: #333;
   padding: 15px;
@@ -15,25 +15,6 @@ body {
   margin-bottom: 60px; 
 }
 
-/* .custom-nav {
-  font-size: 1.2rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-
-.custom-nav:hover {
-  color: #ffc107 !important; 
-  text-decoration: underline;
-}
-
-.custom-nav.active {
-  border-bottom: 2px solid white;
-  color: #fff !important;
-} */
-
-
-/* Custom nav styling */
 .custom-nav {
   font-size: 1.2rem;
   font-weight: bold;
@@ -47,4 +28,92 @@ body {
 
 .custom-nav.active {
   border-bottom: 2px solid white;
+} */
+
+
+
+
+/* Layout */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  min-height: calc(100vh - 56px - 48px); /* Navbar height + footer height */
+  border-right: 1px solid #ddd;
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+  padding: 10px 0;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  background-color: #f5f7fa;
+  min-height: calc(100vh - 56px - 48px); /* Adjust based on header/footer */
+}
+
+/* Navbar */
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.custom-nav {
+  font-weight: 600;
+}
+
+.custom-nav.active {
+  border-bottom: 2px solid #fff;
+}
+
+/* Footer */
+.footer {
+  flex-shrink: 0;
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 8px;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.app-content {
+  flex: 1 0 auto; /* Grow and shrink but don't shrink below content */
+  padding-bottom: 1rem; /* space for footer */
+}
+/* Override User dropdown toggle hover */
+.nav-link.dropdown-toggle.btn-outline-light:hover,
+.nav-link.dropdown-toggle.btn-outline-light:focus {
+  background-color: transparent !important; /* Remove white background */
+  color: white !important; /* Change text color to white */
+  text-decoration: none; /* Optional: remove underline */
+  box-shadow: none !important;
 }

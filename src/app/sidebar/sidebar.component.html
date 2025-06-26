@@ -6,11 +6,11 @@
         <div class="rounded-circle bg-secondary mb-3" style="width: 100px; height: 100px; margin: auto;">
             <i class="bi bi-person"></i>
         </div>
-
+ 
         <!-- Name -->
         <div *ngIf="!isEditMode">{{ user.name }}</div>
         <input *ngIf="isEditMode" [(ngModel)]="user.name" class="form-control mb-2" />
-
+ 
         <!-- Patient ID -->
         <div *ngIf="!isEditMode">
           <p class="text-muted mb-1">Patient ID: {{ user.patientId }}</p>
@@ -18,7 +18,7 @@
         <input *ngIf="isEditMode" [(ngModel)]="user.patientId" class="form-control mb-2" placeholder="Patient ID" />
       </div>
     </div>
-
+ 
     <!-- Personal Details Card -->
     <div class="card mb-4">
       <div class="card-header fw-bold">Personal Details</div>
@@ -59,16 +59,16 @@
         </li>
       </ul>
     </div>
-
+ 
     <!-- Action Buttons -->
     <div class="d-flex flex-column gap-2 w-100" style="max-width: 320px; margin: 0 auto;">
       <button class="btn btn-primary" (click)="toggleEdit()" *ngIf="!isEditMode">Edit Profile</button>
       <button class="btn btn-success" (click)="saveProfile()" *ngIf="isEditMode">Save</button>
-      <button class="btn btn-primary w-100" style="margin-top: 10px;" routerLink="/booking">
-        Book Slot
+      <button class="btn btn-primary w-100" style="margin-top: 10px;" routerLink="/user-dashboard">
+        Back to Dashboard
       </button>
+      <!-- <button class="btn btn-primary w-100" style="margin-top: 10px;" routerLink="/certificate">
+        Download Certificate
+      </button> -->
     </div>
 </div>
-
-
-

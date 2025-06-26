@@ -1,5 +1,15 @@
 <div class="container mt-5">
   <h3 class="text-primary text-center mb-4">Users Booking</h3>
+  
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by name"
+      [(ngModel)]="searchText"
+    />
+  </div>
+  
   <div class="table-responsive">
     <table class="table table-bordered table-striped text-center">
       <thead class="thead-dark">
@@ -13,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users; let i = index">
+        <tr *ngFor="let user of filteredUsers; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
@@ -24,8 +34,8 @@
             <a href="#" class="text-danger" (click)="deleteUser(i); $event.preventDefault()">Delete</a>
           </td>
         </tr>
-        <tr *ngIf="users.length === 0">
-          <td colspan="6" class="text-muted">No users available.</td>
+        <tr *ngIf="filteredUsers.length === 0">
+          <td colspan="6" class="text-danger">User not found</td>
         </tr>
       </tbody>
     </table>
