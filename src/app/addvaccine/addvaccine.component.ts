@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-addvaccine',
@@ -6,19 +7,48 @@ import { Component } from '@angular/core';
   styleUrls: ['./addvaccine.component.css']
 })
 export class AddvaccineComponent {
-vaccineName:string='';
- dosesAvailable: number | null = null;
+  vaccineName: string = '';
+  vaccineDescription: string = '';
+  addVaccineError: string = '';
+  addVaccineSuccess: string = '';
+
+  constructor(private http: HttpClient) {}
 
   addVaccine() {
-    if (this.vaccineName && this.dosesAvailable !== null) {
-      // Logic to add the vaccine
-      console.log(`Adding vaccine: ${this.vaccineName} with ${this.dosesAvailable} doses available.`);
-      
-      // Reset form fields
-      this.vaccineName = '';
-      this.dosesAvailable = null;
-    } else {
-      alert('Please fill in all fields.');
+    if (!this.vaccineName || !this.vaccineDescription) {
+      this.addVaccineError = 'Please fill in all fields.';
+      this.addVaccineSuccess = '';
+      return;
     }
+
+    const payload = {
+      vaccineId: 0,
+      name: this.vaccineName,
+      description: this.vaccineDescription
+    };
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.addVaccineError = '';
+    this.addVaccineSuccess = '';
+    this.http.post(
+      'https://f1h42csw-5136.inc1.devtunnels.ms/api/Vaccine?adminUserId=1',
+      payload,
+      { headers, responseType: 'text' }
+    ).subscribe({
+      next: (res) => {
+        this.addVaccineSuccess = res;
+        this.addVaccineError = '';
+        this.vaccineName = '';
+        this.vaccineDescription = '';
+      },
+      error: (err) => {
+        this.addVaccineSuccess = '';
+        this.addVaccineError = 'Failed to add vaccine. Please try again.';
+        console.error('Add vaccine error:', err);
+      }
+    });
   }
 }

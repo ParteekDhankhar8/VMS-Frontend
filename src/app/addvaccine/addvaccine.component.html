@@ -1,28 +1,16 @@
-<!-- Add Vaccine Form Example -->
-<div class="add-vaccine-wrapper">
-  <div class="add-vaccine-container">
-    <h3 class="mb-4 text-center text-success">Add Vaccine</h3>
-
-    <div class="form-group">
-      <label for="vaccineName">Vaccine Name:</label>
-      <input id="vaccineName" class="form-control" [(ngModel)]="vaccineName" placeholder="Enter vaccine name" />
+<div class="container mt-4">
+  <h3>Add Vaccine</h3>
+  <div *ngIf="addVaccineError" class="alert alert-danger">{{ addVaccineError }}</div>
+  <div *ngIf="addVaccineSuccess" class="alert alert-success">{{ addVaccineSuccess }}</div>
+  <form (ngSubmit)="addVaccine()" #vaccineForm="ngForm">
+    <div class="mb-3">
+      <label for="vaccineName" class="form-label">Vaccine Name</label>
+      <input id="vaccineName" class="form-control" [(ngModel)]="vaccineName" name="vaccineName" required />
     </div>
-
-    <!-- <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea id="description" class="form-control" [(ngModel)]="description" placeholder="Enter description"></textarea>
+    <div class="mb-3">
+      <label for="vaccineDescription" class="form-label">Description</label>
+      <input id="vaccineDescription" class="form-control" [(ngModel)]="vaccineDescription" name="vaccineDescription" required />
     </div>
-
-    <div class="form-group">
-      <label for="updateDateTime">DateTime Updation:</label>
-      <input id="updateDateTime" type="datetime-local" class="form-control" [(ngModel)]="updateDateTime" />
-    </div> -->
-
-    <div class="form-group">
-      <label for="dosesAvailable">No. of Doses Available:</label>
-      <input id="dosesAvailable" type="number" min="0" class="form-control" [(ngModel)]="dosesAvailable" placeholder="Enter number of doses" />
-    </div>
-
-    <button class="btn btn-success mt-3 w-100" (click)="addVaccine()">Add Vaccine</button>
-  </div>
+    <button type="submit" class="btn btn-primary">Add Vaccine</button>
+  </form>
 </div>

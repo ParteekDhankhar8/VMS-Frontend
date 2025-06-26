@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-usertable',
@@ -6,29 +7,32 @@ import { Component } from '@angular/core';
   styleUrls: ['./usertable.component.css']
 })
 export class UsertableComponent {
-  users = [
-    { name: 'Alice Sharma', email: 'alice@example.com', city: 'Delhi', state: 'Delhi' },
-    { name: 'Bob Mehta', email: 'bob@example.com', city: 'Mumbai', state: 'Maharashtra' },
-    { name: 'Charlie Das', email: 'charlie@example.com', city: 'Bangalore', state: 'Karnataka' }
-  ];
+  bookings: any[] = [];
+  fetchError: string = '';
 
-  searchText: string = '';
-
-  get filteredUsers() {
-    if (!this.searchText) {
-      return this.users;
-    }
-    const lower = this.searchText.toLowerCase();
-    return this.users.filter(user => user.name.toLowerCase().includes(lower));
+  constructor(private http: HttpClient) {
+    this.fetchBookings();
   }
 
-  viewProfile(user: any) {
-    alert(`Viewing profile for ${user.name}`);
-  }
-
-  deleteUser(index: number) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.users.splice(index, 1);
-    }
+  fetchBookings() {
+    const url = `https://f1h42csw-5136.inc1.devtunnels.ms/api/admin/dashboard/all-bookings?adminUserId=1`;
+    this.http.get(url, { responseType: 'text' }).subscribe({
+      next: (res: string) => {
+        try {
+          console.log('Raw response:', res);
+          this.bookings = JSON.parse(res);
+          this.fetchError = '';
+        } catch (e) {
+          console.error('Error parsing bookings:', e);
+          this.bookings = [];
+          this.fetchError = 'Failed to parse bookings.';
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching bookings:', err);
+        this.bookings = [];
+        this.fetchError = 'API error: could not fetch bookings.';
+      }
+    });
   }
 }
