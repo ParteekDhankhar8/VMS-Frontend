@@ -1,18 +1,19 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
  
 // Define the shape of the booking data to send
 export interface BookingData {
-  userId: any;
-  memberId: any;
-  slotId: any;
-  vaccineType: string;
-  state: string;
+  userId: number;
+  memberId: number;
+  country: string;
+  slotId: number;
+  vaccineName: string;
+  vaccinationCenterName: string;
   city: string;
-  date: string;
-  time: string;
+  state: string;
+  slotDate: string;
+  slotTime: string;
 }
  
 @Injectable({

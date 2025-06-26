@@ -107,7 +107,21 @@
         
       
     </div>
-
+    <!-- Age -->
+    <div class="form-group-inline mb-3">
+      <label for="age">Age:</label>
+      <input type="number" class="form-control" [(ngModel)]="age" placeholder="Enter age" min="0" required />
+    </div>
+    <!-- Gender -->
+    <div class="form-group-inline mb-3">
+      <label for="gender">Gender:</label>
+      <select class="form-control" [(ngModel)]="gender" required>
+        <option value="">-- Select Gender --</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
     <div class="form-group-inline mb-3">
       <label for="vaccine">Vaccine Type:</label>
       <select id="vaccine" class="form-control" [(ngModel)]="selectedVaccine" name="vaccine" (change)="onVaccineChange()" required>
@@ -159,21 +173,10 @@
       />
     </div>
  
-    <!-- Time -->
-    <!-- <div class="form-group-inline mb-3">
-      <label for="time">Select Time:</label>
-      <select id="time" class="form-control" [(ngModel)]="selectedTime" name="time" [disabled]="!selectedDate" required>
-        <option value="">-- Select Time --</option>
-        <option *ngFor="let time of availableTimes" [value]="time" [disabled]="isPastTime(time)">
-          {{ time }} <span *ngIf="isPastTime(time)"> (Not Available)</span>
-        </option>
-      </select>
-    </div> -->
- 
     <button
       class="btn btn-primary mt-3 w-100"
       (click)="bookAppointment()"
-      [disabled]="!selectedVaccine || !selectedState || !selectedCity || !selectedDate  || !selectedMember">
+      [disabled]="!recipientName || !age || !gender || !selectedVaccine || !selectedState || !selectedCity || !selectedDate  || !selectedMember">
       Book Appointment
     </button>
   </div>

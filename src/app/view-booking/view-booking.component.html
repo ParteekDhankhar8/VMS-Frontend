@@ -51,22 +51,18 @@
         <thead class="thead-dark">
           <tr>
             <th>Name</th>
-            <th>Relation</th>
-            <th>Vaccine</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Location</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>User ID</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let booking of familyBookings; let i = index">
-            <td>{{ booking.name }}</td>
-            <td>{{booking.relation}}</td>
-            <td>{{ booking.vaccine }}</td>
-            <td>{{ booking.date }}</td>
-            <td>{{ booking.time }}</td>
-            <td>{{ booking.location }}</td>
+            <td>{{ booking.fullName }}</td>
+            <td>{{ booking.age }}</td>
+            <td>{{ booking.gender }}</td>
+            <td>{{ booking.userId }}</td>
             <td>
               <a href="#" class="text-danger" (click)="deleteFamilyBooking(i); $event.preventDefault()">Delete Booking</a>
             </td>

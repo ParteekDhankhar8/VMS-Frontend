@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RescheduleBookingService, RescheduleBookingData } from '../services/reschedule-booking.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reschedulebook',
   templateUrl: './reschedulebook.component.html',
   styleUrls: ['./reschedulebook.component.css']
 })
-export class ReschedulebookComponent {
+export class ReschedulebookComponent implements OnInit {
   vaccineTypes: string[] = ['Covishield', 'Polio'];
  
   states: string[] = ['Maharashtra', 'Karnataka'];
@@ -28,9 +30,26 @@ export class ReschedulebookComponent {
     'Polio': ['10:00 AM', '11:00 AM', '1:00 PM']
   };
  
+  bookingId: number = 0; // Set this to the booking being rescheduled
+  userId: number = 1; // Replace with actual userId
+  memberId: number = 0; // Set as needed
+  country: string = 'India';
+  slotId: number = 0; // Set as needed
+  vaccinationCenterName: string = 'Default Center'; // Set as needed
+
+  constructor(
+    private rescheduleBookingService: RescheduleBookingService,
+    private route: ActivatedRoute
+  ) {}
+
   ngOnInit() {
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
+    this.route.queryParams.subscribe(params => {
+      if (params['bookingId']) {
+        this.bookingId = +params['bookingId'];
+      }
+    });
   }
  
   onVaccineChange() {
@@ -73,6 +92,35 @@ export class ReschedulebookComponent {
     this.selectedCity = '';
     this.selectedDate = '';
     this.selectedTime = '';
+    }
+  }
+
+  rescheduleBooking() {
+    if (!this.selectedVaccine || !this.selectedState || !this.selectedCity || !this.selectedDate || !this.selectedTime) {
+      alert('Please fill all details before rescheduling.');
+    } else {
+      const data: RescheduleBookingData = {
+        bookingId: this.bookingId,
+        userId: this.userId,
+        memberId: this.memberId,
+        country: this.country,
+        slotId: this.slotId,
+        vaccineName: this.selectedVaccine,
+        vaccinationCenterName: this.vaccinationCenterName,
+        city: this.selectedCity,
+        state: this.selectedState,
+        slotDate: this.selectedDate,
+        slotTime: this.selectedTime
+      };
+      this.rescheduleBookingService.rescheduleBooking(data).subscribe({
+        next: (response) => {
+          alert('✅ Appointment rescheduled successfully!');
+          // Optionally update frontend state here
+        },
+        error: (err) => {
+          alert('❌ Failed to reschedule appointment. ' + (err?.error || 'Please try again.'));
+        }
+      });
     }
   }
 }

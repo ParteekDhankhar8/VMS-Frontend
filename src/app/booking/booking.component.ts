@@ -86,6 +86,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BookingServiceService } from '../services/booking-service.service';
 
 @Component({
   selector: 'app-booking',
@@ -93,7 +94,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private bookingService: BookingServiceService // Inject the booking service
+  ) {}
 
   vaccineTypes: string[] = ['Covishield', 'Polio'];
   states: string[] = ['Maharashtra', 'Karnataka'];
@@ -115,6 +119,12 @@ export class BookingComponent implements OnInit {
     'Covishield': ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM'],
     'Polio': ['10:00 AM', '11:00 AM', '1:00 PM']
   };
+
+  country: string = 'India'; // Set default or get from user
+  vaccinationCenterName: string = 'Default Center'; // Set as needed
+  userId: number = 1; // Replace with actual userId from auth context
+  memberId: number = 0; // Set as needed
+  slotId: number = 0; // Set as needed
 
   ngOnInit() {
     const today = new Date();
@@ -163,18 +173,26 @@ export class BookingComponent implements OnInit {
       alert('❌ Please fill all details before booking.');
     } else {
       const booking = {
-        vaccine: this.selectedVaccine,
-        state: this.selectedState,
+        userId: this.userId,
+        memberId: this.memberId,
+        country: this.country,
+        slotId: this.slotId,
+        vaccineName: this.selectedVaccine,
+        vaccinationCenterName: this.vaccinationCenterName,
         city: this.selectedCity,
-        date: this.selectedDate,
-        
+        state: this.selectedState,
+        slotDate: this.selectedDate,
+        slotTime: this.selectedTime || ''
       };
-
-      // Save to localStorage to prevent multiple bookings
-      localStorage.setItem('singleBooking', JSON.stringify(booking));
-
-      alert(`✅ Appointment booked for ${this.selectedVaccine} in ${this.selectedCity}, ${this.selectedState} on ${this.selectedDate} `);
-      this.router.navigate(['/view-booking']);
+      this.bookingService.bookAppointment(booking).subscribe({
+        next: (response) => {
+          alert('✅ Appointment booked successfully!');
+          this.router.navigate(['/view-booking']);
+        },
+        error: (err) => {
+          alert('❌ Failed to book appointment. ' + (err?.error || 'Please try again.'));
+        }
+      });
     }
   }
 }
