@@ -111,52 +111,24 @@ export class BookingComponent implements OnInit {
     private http: HttpClient
   ) { }
 
-
-
-  vaccineTypes: string[] = ['Covishield', 'Polio'];
-  states: string[] = ['Maharashtra', 'Karnataka'];
-  cityMap: { [key: string]: string[] } = {
-    'Maharashtra': ['Pune', 'Mumbai'],
-    'Karnataka': ['Bangalore', 'Mysore']
-  };
-
+  slots: SlotApiResponse[] = [];
   selectedVaccine: string = '';
   selectedState: string = '';
   selectedCity: string = '';
   selectedDate: string = '';
   selectedTime: string = '';
-  slots: SlotApiResponse[] = [];
-
   availableTimes: string[] = [];
   minDate: string = '';
-
-  vaccineAvailability: { [key: string]: string[] } = {
-    'Covishield': ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM'],
-    'Polio': ['10:00 AM', '11:00 AM', '1:00 PM']
-  };
-
-  country: string = 'India'; // Set default or get from user
-  vaccinationCenterName: string = ''; // Set as needed
-  userId: number = 10; // Replace with actual userId from auth context
-  memberId: number = 0; // Set as needed
-  slotId: number = 0; // Set as needed
+  country: string = 'India';
+  vaccinationCenterName: string = '';
+  userId: number = 10;
+  memberId: number = 0;
+  slotId: number = 0;
 
   ngOnInit() {
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
     this.fetchSlots();
-
-    // Check if already booked
-    // const existing = localStorage.getItem('singleBooking');
-    // if (existing) {
-    //   alert('⚠️ You have already booked an appointment. Redirecting to view booking...');
-    //   this.router.navigate(['/view-booking']);
-    // }
-  }
-
-  onVaccineChange() {
-    this.availableTimes = this.selectedVaccine ? this.vaccineAvailability[this.selectedVaccine] : [];
-
   }
 
   fetchSlots() {
@@ -165,7 +137,6 @@ export class BookingComponent implements OnInit {
         next: (res: string) => {
           try {
             this.slots = JSON.parse(res);
-            console.log('Fetched slots:', this.slots);
           } catch (e) {
             this.slots = [];
           }
@@ -176,31 +147,52 @@ export class BookingComponent implements OnInit {
       });
   }
 
+  get uniqueVaccineNames(): string[] {
+    return Array.from(new Set(this.slots.map(slot => slot.vaccineName)));
+  }
+
+  get uniqueLocationStates(): string[] {
+    return Array.from(new Set(this.slots.map(slot => slot.locationState)));
+  }
+
+  get uniqueLocationCities(): string[] {
+    return this.selectedState
+      ? Array.from(new Set(this.slots.filter(slot => slot.locationState === this.selectedState).map(slot => slot.locationCity)))
+      : [];
+  }
+
+  get uniqueSlotDates(): string[] {
+    return this.slots
+      .filter(slot =>
+        (!this.selectedVaccine || slot.vaccineName === this.selectedVaccine) &&
+        (!this.selectedState || slot.locationState === this.selectedState) &&
+        (!this.selectedCity || slot.locationCity === this.selectedCity)
+      )
+      .map(slot => slot.slotDate)
+      .filter((date, i, arr) => arr.indexOf(date) === i);
+  }
+
+  onVaccineChange() {
+    // Optionally update availableTimes here if you want to filter by slot
+    this.selectedTime = '';
+  }
+
   onStateChange() {
     this.selectedCity = '';
   }
 
-  // Returns unique vaccination centers for the selected state and vaccine, with availableCount
-
-
   isPastTime(time: string): boolean {
     if (!this.selectedDate) return false;
-
     const today = new Date();
     const selected = new Date(this.selectedDate);
-
     if (selected.toDateString() !== today.toDateString()) return false;
-
     const [hourPart, minutePart, meridian] = time.split(/[:\s]/);
     let hour = parseInt(hourPart, 10);
     const minute = parseInt(minutePart, 10);
-
     if (meridian === 'PM' && hour !== 12) hour += 12;
     if (meridian === 'AM' && hour === 12) hour = 0;
-
     const slotTime = new Date();
     slotTime.setHours(hour, minute, 0, 0);
-
     return slotTime.getTime() < today.getTime();
   }
 

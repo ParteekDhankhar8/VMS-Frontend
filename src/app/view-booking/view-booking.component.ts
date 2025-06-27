@@ -1,5 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewFamilyBookingService, FamilyMember } from '../services/view-family-booking.service';
+import { HttpClient } from '@angular/common/http';
+
+interface SlotApiResponse {
+  slotId: number;
+  vaccineName: string;
+  locationCity: string;
+  locationState: string;
+  locationCountry: string;
+  slotDate: string;
+  availableCount: number;
+  vaccinationCenterName: string;
+}
 
 @Component({
   selector: 'app-view-booking',
@@ -9,21 +21,49 @@ import { ViewFamilyBookingService, FamilyMember } from '../services/view-family-
 export class ViewBookingComponent implements OnInit {
   userBookings = [
     { name: 'Alice', vaccine: 'Covaxin', date: '2025-06-25', time: '09:00 AM', location: 'Chennai' }
-    
   ];
-  familyBookings: FamilyMember[] = [];
+  familyBookings: any[] = [];
   userId: number = 1; // Replace with actual userId from auth context if available
+  slots: SlotApiResponse[] = [];
 
-  constructor(private viewFamilyBookingService: ViewFamilyBookingService) {}
+  constructor(private viewFamilyBookingService: ViewFamilyBookingService, private http: HttpClient) {}
 
   ngOnInit() {
-    this.getFamilyBookings();
+    this.fetchSlotsAndBookings();
+  }
+
+  fetchSlotsAndBookings() {
+    this.http.get('https://f1h42csw-5136.inc1.devtunnels.ms/api/Slot/available', { responseType: 'text' })
+      .subscribe({
+        next: (res: string) => {
+          try {
+            this.slots = JSON.parse(res);
+          } catch (e) {
+            this.slots = [];
+          }
+          this.getFamilyBookings();
+        },
+        error: () => {
+          this.slots = [];
+          this.getFamilyBookings();
+        }
+      });
   }
 
   getFamilyBookings() {
     this.viewFamilyBookingService.getFamilyMembers(this.userId).subscribe({
-      next: (data) => {
-        this.familyBookings = data;
+      next: (data: any[]) => {
+        // Map slot details into each family booking
+        this.familyBookings = data.map(fb => {
+          const slot = this.slots.find(s => s.slotId === fb.slotId);
+          return {
+            ...fb,
+            vaccineName: slot ? slot.vaccineName : '',
+            date: slot ? slot.slotDate.split('T')[0] : '',
+            time: slot ? (slot.slotDate.split('T')[1] ? slot.slotDate.split('T')[1].substring(0,5) : '') : '',
+            location: slot ? `${slot.locationCity}, ${slot.locationState}` : ''
+          };
+        });
       },
       error: (err) => {
         alert('Failed to fetch family bookings.');
@@ -37,10 +77,11 @@ export class ViewBookingComponent implements OnInit {
 
   deleteFamilyBooking(index: number) {
     const memberId = this.familyBookings[index].memberId;
+    const name = this.familyBookings[index].fullName;
     this.viewFamilyBookingService.deleteFamilyMember(memberId).subscribe({
       next: () => {
         this.familyBookings.splice(index, 1);
-        alert('Family booking deleted successfully.');
+        alert(`Family booking for ${name} deleted successfully.`);
       },
       error: () => {
         alert('Failed to delete family booking.');

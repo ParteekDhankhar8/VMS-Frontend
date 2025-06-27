@@ -80,7 +80,7 @@
       <label>Vaccine Type:</label>
       <select class="form-control" [(ngModel)]="selectedVaccine" (change)="onVaccineChange()">
         <option value="">-- Select Vaccine --</option>
-        <option *ngFor="let vaccine of vaccineTypes" [value]="vaccine">{{ vaccine }}</option>
+        <option *ngFor="let vaccine of uniqueVaccineNames" [value]="vaccine">{{ vaccine }}</option>
       </select>
     </div>
  
@@ -89,7 +89,7 @@
       <label for="state">State:</label>
       <select id="state" class="form-control" [(ngModel)]="selectedState" (change)="onStateChange()">
         <option value="">-- Select State --</option>
-        <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+        <option *ngFor="let state of uniqueLocationStates" [value]="state">{{ state }}</option>
       </select>
     </div>
  
@@ -98,7 +98,7 @@
       <label for="city">City:</label>
       <select id="city" class="form-control" [(ngModel)]="selectedCity" [disabled]="!selectedState">
         <option value="">-- Select City --</option>
-        <option *ngFor="let city of cityMap[selectedState]" [value]="city">{{ city }}</option>
+        <option *ngFor="let city of uniqueLocationCities" [value]="city">{{ city }}</option>
       </select>
     </div>
  
@@ -112,29 +112,14 @@
       </select>
     </div>
 
-    <!-- Date -->
+    <!-- Select Date -->
     <div class="form-group-inline">
-      <label>Select Date:</label>
-      <input
-        class="form-control"
-        type="datetime-local"
-        [min]="minDate"
-        [(ngModel)]="selectedDate"
-        (change)="onVaccineChange()"
-        [disabled]="!selectedVaccine || !selectedState || !selectedCity"
-      />
-    </div>
- 
-    <!-- Time -->
-    <!-- <div class="form-group-inline">
-      <label>Select Time:</label>
-      <select class="form-control" [(ngModel)]="selectedTime" [disabled]="!selectedDate">
-        <option value="">-- Select Time --</option>
-        <option *ngFor="let time of availableTimes" [value]="time" [disabled]="isPastTime(time)">
-          {{ time }} <span *ngIf="isPastTime(time)"> (Not Available)</span>
-        </option>
+      <label for="selectdate">Select Date:</label>
+      <select id="selectdate" class="form-control" [(ngModel)]="selectedDate" [disabled]="!selectedVaccine || !selectedState || !selectedCity">
+        <option value="">-- Select Date --</option>
+        <option *ngFor="let date of uniqueSlotDates" [value]="date">{{ date | date:'medium' }}</option>
       </select>
-    </div> -->
+    </div>
  
     <button
       class="btn btn-primary mt-3 w-100"

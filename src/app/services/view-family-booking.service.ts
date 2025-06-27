@@ -8,6 +8,10 @@ export interface FamilyMember {
   age: number;
   gender: string;
   userId: number;
+  vaccineName: string;
+  date: string;
+  time: string;
+  location: string;
 }
 
 @Injectable({

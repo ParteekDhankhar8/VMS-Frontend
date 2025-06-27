@@ -41,5 +41,21 @@ export class AddslotComponent implements OnInit {
         }
       });
   }
+
+  get uniqueVaccineNames(): string[] {
+    return Array.from(new Set(this.slots.map(slot => slot.vaccineName)));
+  }
+
+  get uniqueLocationCities(): string[] {
+    return Array.from(new Set(this.slots.map(slot => slot.locationCity)));
+  }
+
+  get uniqueLocationStates(): string[] {
+    return Array.from(new Set(this.slots.map(slot => slot.locationState)));
+  }
+
+  get uniqueSlotDates(): string[] {
+    return Array.from(new Set(this.slots.map(slot => slot.slotDate)));
+  }
 }
 

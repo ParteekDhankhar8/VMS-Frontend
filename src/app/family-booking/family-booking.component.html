@@ -126,16 +126,15 @@
       <label for="vaccine">Vaccine Type:</label>
       <select id="vaccine" class="form-control" [(ngModel)]="selectedVaccine" name="vaccine" (change)="onVaccineChange()" required>
         <option value="">-- Select Vaccine --</option>
-        <option *ngFor="let vaccine of vaccineTypes" [value]="vaccine">{{ vaccine }}</option>
+        <option *ngFor="let vaccine of uniqueVaccineNames" [value]="vaccine">{{ vaccine }}</option>
       </select>
     </div>
- 
     <!-- State -->
     <div class="form-group-inline mb-3">
       <label for="state">State:</label>
       <select id="state" class="form-control" [(ngModel)]="selectedState" name="state" (change)="onStateChange()" required>
         <option value="">-- Select State --</option>
-        <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+        <option *ngFor="let state of uniqueLocationStates" [value]="state">{{ state }}</option>
       </select>
     </div>
  
@@ -144,7 +143,7 @@
       <label for="city">City:</label>
       <select id="city" class="form-control" [(ngModel)]="selectedCity" name="city" [disabled]="!selectedState" required>
         <option value="">-- Select City --</option>
-        <option *ngFor="let city of cityMap[selectedState]" [value]="city">{{ city }}</option>
+        <option *ngFor="let city of uniqueLocationCities" [value]="city">{{ city }}</option>
       </select>
     </div>
  
@@ -156,21 +155,21 @@
         <option *ngFor="let member of familyMembers" [value]="member">{{ member }}</option>
       </select>
     </div>
- 
+    <!-- Vaccination Center -->
+    <div class="form-group-inline mb-3">
+      <label for="vaccinationCenter">Vaccination Center:</label>
+      <select id="vaccinationCenter" class="form-control" [(ngModel)]="selectedVaccinationCenter" name="vaccinationCenter" required>
+        <option value="">-- Select Center --</option>
+        <option *ngFor="let center of uniqueVaccinationCenters" [value]="center">{{ center }}</option>
+      </select>
+    </div>
     <!-- Date -->
     <div class="form-group-inline mb-3">
       <label for="date">Select Date:</label>
-      <input
-        id="date"
-        class="form-control"
-        type="datetime-local"
-        [min]="minDate"
-        [(ngModel)]="selectedDate"
-        name="date"
-        (change)="onVaccineChange()"
-        [disabled]="!selectedVaccine || !selectedState || !selectedCity"
-        required
-      />
+      <select id="date" class="form-control" [(ngModel)]="selectedDate" name="date" [disabled]="!selectedVaccine || !selectedState || !selectedCity" required>
+        <option value="">-- Select Date --</option>
+        <option *ngFor="let date of uniqueSlotDates" [value]="date">{{ date | date:'medium' }}</option>
+      </select>
     </div>
  
     <button
