@@ -26,20 +26,38 @@ const routes: Routes = [
   {path :'signup' , component: SignupComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'register', component: SignupComponent },
-  { path: 'user-dashboard', component: UserComponent },
+  
   { path: 'dashboard', component: DashboardComponent },
   { path: 'navbar', component: NavbarComponent },
   { path: 'sidebar', component: SidebarComponent },
   { path: 'vaccinehistory', component: VaccinehistoryComponent },
-  {path : 'user-profile', component: UserProfileComponent},
-  {path: 'booking', component: BookingComponent},
-{path: 'family-booking', component: FamilyBookingComponent},
-{path:'view-booking', component: ViewBookingComponent},
-{path:'certificate',component:CertificateComponent},
-{path:'admin-dashboard',component: AdmindashboardComponent},
-{path:'rescheduleview',component:RescheduleviewComponent},
-{path:'reschedulebook',component:ReschedulebookComponent},
-{path:'making-slots',component: MakingSlotsComponent},
+  
+  
+  
+  
+  {path:'certificate',component:CertificateComponent},
+  {path:'admin-dashboard',component: AdmindashboardComponent},
+  
+  {path:'reschedulebook',component:ReschedulebookComponent},
+  { path:'making-slots',component: MakingSlotsComponent},
+
+
+   {
+    path: 'user-dashboard',
+    component: UserComponent,
+    children: [
+      { path: '', redirectTo: 'user-dashboard', pathMatch: 'full' },
+      { path: 'booking', component: BookingComponent },
+      { path: 'family-booking', component: FamilyBookingComponent },
+      { path: 'view-schedule', component: RescheduleviewComponent },
+      { path: 'user-profile', component: UserProfileComponent },
+      { path: 'view-booking', component: ViewBookingComponent },
+    ]
+  },
+
+
+
+
 
 
 
@@ -47,6 +65,9 @@ const routes: Routes = [
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
+
+  
+ 
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

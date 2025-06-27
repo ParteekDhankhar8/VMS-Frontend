@@ -43,9 +43,11 @@ export class MakingSlotsComponent implements OnInit {
     const url = `https://f1h42csw-5136.inc1.devtunnels.ms/api/admin/dashboard/add-slot?adminUserId=${this.adminUserId}`;
     this.http.post(url, this.slotForm).subscribe({
       next: (res) => {
+        console.log('Success:', res);
         this.responseMsg = 'Slot added successfully!';
       },
       error: (err) => {
+        console.error('Error:', err);
         this.responseMsg = 'Error adding slot.';
       }
     });

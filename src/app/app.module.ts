@@ -35,6 +35,7 @@ import { RescheduleviewComponent } from './rescheduleview/rescheduleview.compone
 import { ReschedulebookComponent } from './reschedulebook/reschedulebook.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { MakingSlotsComponent } from './making-slots/making-slots.component';
+import { SharedLayoutComponent } from './shared-layout/shared-layout.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { MakingSlotsComponent } from './making-slots/making-slots.component';
     RescheduleviewComponent,
     ReschedulebookComponent,
     AdminhomeComponent,
-    MakingSlotsComponent
+    MakingSlotsComponent,
+    SharedLayoutComponent
   ],
   imports: [
     BrowserModule,

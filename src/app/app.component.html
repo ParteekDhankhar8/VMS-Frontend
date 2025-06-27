@@ -1,76 +1,4 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
- 
- <a class="nav-link custom-nav" [routerLink]="['/about']" routerLinkActive="active"><span class="navbar-brand" style="font-weight: bold; font-size: 1.5rem;">CAMBRIA LTD</span></a>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarContent">
-
-    
-    <ul class="navbar-nav mx-auto">
-      <li class="nav-item mx-2">
-        <a class="nav-link custom-nav" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-      </li>
-      <li class="nav-item mx-2">
-        <a class="nav-link custom-nav" [routerLink]="['/about']" routerLinkActive="active">About</a>
-      </li>
-      <li class="nav-item mx-2">
-        <a class="nav-link custom-nav" [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
-      </li>
-    </ul>
-
-
-
-<div class="d-flex align-items-center">
-  
-  <ng-container *ngIf="!authService.isAuthenticated(); else loggedInBlock">
-   
-    <div class="btn-group me-2">
-      <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        USER
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" [routerLink]="['/login']" [queryParams]="{ role: 'User' }">LOGIN</a></li>
-        <li><a class="dropdown-item" [routerLink]="['/register']" [queryParams]="{ role: 'User' }">REGISTER</a></li>
-      </ul>
-    </div>
-
-
-    <a class="btn btn-outline-light" [routerLink]="['/login']" [queryParams]="{ role: 'Admin' }">ADMIN</a>
-  </ng-container>
-
-  
-  <ng-template #loggedInBlock>
-    <button class="btn btn-light" (click)="logout()">LOGOUT</button>
-  </ng-template>
-</div>
-
-
-
-  </div>
-</nav>
-
-
-
-
-
-<router-outlet></router-outlet>
-
-
-<footer class="footer">
-  © 2025 Vaccine Management System. All rights reserved.
-</footer>
-
- -->
-
-
-
-
-
- <!-- Navigation Bar -->
+<!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
   <a class="navbar-brand fw-bold" [routerLink]="['/']">📊 CAMBRIA LTD</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -123,12 +51,12 @@
   </div>
 </nav>
 
-<!-- Main Page Content -->
-<!-- <div class="app-content">
+<!-- Main Page Content with Scrollbar -->
+<div class="app-scroll-content">
   <router-outlet></router-outlet>
-</div> -->
-<router-outlet></router-outlet>
+</div>
+
 <!-- Footer -->
 <!-- <footer class="footer">
-  © 2025 Cambria Ltd Dashboard. All rights reserved.
+  © 2025 Vaccine Management System. All rights reserved.
 </footer> -->

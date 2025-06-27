@@ -196,6 +196,8 @@ export class BookingComponent implements OnInit {
     return slotTime.getTime() < today.getTime();
   }
 
+  
+
   bookAppointment() {
     if (!this.selectedVaccine || !this.selectedState || !this.selectedCity || !this.selectedDate) {
       alert('❌ Please fill all details before booking.');
@@ -221,6 +223,7 @@ export class BookingComponent implements OnInit {
           alert('❌ Failed to book appointment. ' + (err?.error || 'Please try again.'));
         }
       });
+
     }
   }
 }

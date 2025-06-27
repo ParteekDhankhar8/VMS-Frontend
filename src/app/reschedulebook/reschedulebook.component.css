@@ -1,3 +1,4 @@
+
 body, html {
   height: 100%;
   margin: 0;
@@ -5,29 +6,31 @@ body, html {
   background-color: #f5f7fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
- 
-.booking-wrapper {
+
+
+ .book-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 86vh;
-  background-color: #f5f7fa;
   padding: 20px;
 }
- 
- 
-.booking-container {
-  width: 100%;
+
+.container {
+ width: 100%;
+  margin-bottom: 120px;
   max-width: 700px;
   background: #ffffff;
   padding: 40px 50px;
   border: 3px solid #007bff;
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  margin-bottom: 114px;
+  text-align: center;
 }
  
+
  
+
 h2 {
   text-align: center;
   margin-bottom: 40px;
@@ -35,7 +38,7 @@ h2 {
   font-weight: bold;
 }
  
- 
+
 .form-group-inline {
   display: flex;
   align-items: center;
@@ -59,7 +62,7 @@ h2 {
   height: auto;
 }
  
- 
+
 select option[disabled] {
   color: #aaa;
 }
@@ -86,7 +89,7 @@ select option[disabled] {
   cursor: not-allowed;
 }
  
- 
+
 @media (max-width: 768px) {
   .booking-container {
     padding: 25px;
@@ -107,3 +110,4 @@ select option[disabled] {
     width: 100%;
   }
 }
+ 

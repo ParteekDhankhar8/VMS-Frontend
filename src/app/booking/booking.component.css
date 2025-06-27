@@ -7,26 +7,28 @@ body, html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.booking-wrapper {
+
+ .book-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f5f7fa;
+  min-height: 86vh;
   padding: 20px;
 }
- 
 
-.booking-container {
-  width: 100%;
+.container {
+ width: 100%;
+  margin-bottom: 120px;
   max-width: 700px;
   background: #ffffff;
   padding: 40px 50px;
   border: 3px solid #007bff;
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  margin-bottom: 114px;
+  text-align: center;
 }
+ 
+
  
 
 h2 {

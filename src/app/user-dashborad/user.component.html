@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
    
     <div class="col-md-2 col-lg-2 mt-5 sdd" >
@@ -29,7 +29,7 @@
         </ul>
       </div>
     </nav>
-      <!-- <app-usersidebar></app-usersidebar> -->
+
     </div>
  
  
@@ -44,7 +44,74 @@
     </div>
   </div>
 </div>
-<!-- Header that spans across the top -->
 
 
 
+ -->
+
+
+ <div class="admin-wrapper d-flex">
+
+  <!-- Sidebar -->
+  <nav class="sidebar bg-light p-3">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="dashboard" class="nav-link" [class.active]="selectedTab === 'dashboard'"
+           (click)="selectTab('dashboard'); $event.preventDefault()">Dashoboard</a>
+      </li>
+      <li class="nav-item">
+        <a href="booking" class="nav-link" [class.active]="selectedTab === 'booking'"
+           (click)="selectTab('booking'); $event.preventDefault()">Book Appointment</a>
+      </li>
+      <li class="nav-item">
+        <a href="family-booking" class="nav-link" [class.active]="selectedTab === 'family-booking'"
+           (click)="selectTab('family-booking'); $event.preventDefault()">Book for Family</a>
+      </li>
+      <li class="nav-item">
+        <a href="view-booking" class="nav-link" [class.active]="selectedTab === 'view-booking'"
+           (click)="selectTab('view-booking'); $event.preventDefault()">View Booking</a>
+      </li>
+      <li class="nav-item">
+        <a href="view-schedule" class="nav-link" [class.active]="selectedTab === 'view-schedule'"
+           (click)="selectTab('view-schedule'); $event.preventDefault()">Reschedule Booking</a>
+      </li>
+      <li class="nav-item">
+        <a href="user-profile" class="nav-link" [class.active]="selectedTab === 'user-profile'"
+           (click)="selectTab('user-profile'); $event.preventDefault()">User Profile</a>
+      </li>
+       
+    </ul>
+  </nav>
+
+  <!-- Main content area -->
+  <main class="main-content flex-grow-1 p-4">
+    
+    
+
+    <section *ngIf="selectedTab === 'dashboard'">
+      <h1 class="text-center mb-4">User Dashboard</h1>
+        <div class="booking-container text-center">
+          <img src="/assets/vaccine.jpg" alt="Slide 1" class="center-image">
+        </div>
+    </section>
+
+    <section *ngIf="selectedTab === 'booking'">
+      <app-booking></app-booking>
+    </section>
+
+    <section *ngIf="selectedTab === 'family-booking'">
+      <app-family-booking></app-family-booking>
+    </section>
+
+    <section *ngIf="selectedTab === 'view-schedule'">
+      <app-rescheduleview></app-rescheduleview>
+    </section>
+     <section *ngIf="selectedTab === 'view-booking'">
+     <app-view-booking></app-view-booking>
+    </section>
+     <section *ngIf="selectedTab === 'user-profile'">
+       <app-user-profile></app-user-profile>
+    </section>
+    
+  </main>
+</div>

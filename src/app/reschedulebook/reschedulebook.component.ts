@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./reschedulebook.component.css']
 })
 export class ReschedulebookComponent implements OnInit {
+
+  
   vaccineTypes: string[] = ['Covishield', 'Polio'];
  
   states: string[] = ['Maharashtra', 'Karnataka'];
