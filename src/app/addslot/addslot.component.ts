@@ -19,6 +19,7 @@ interface SlotApiResponse {
 })
 export class AddslotComponent implements OnInit {
   slots: SlotApiResponse[] = [];
+  searchText: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -56,6 +57,16 @@ export class AddslotComponent implements OnInit {
 
   get uniqueSlotDates(): string[] {
     return Array.from(new Set(this.slots.map(slot => slot.slotDate)));
+  }
+
+  get filteredSlots() {
+    if (!this.searchText) return this.slots;
+    const search = this.searchText.toLowerCase();
+    return this.slots.filter(slot =>
+      Object.values(slot).some(val =>
+        val && val.toString().toLowerCase().includes(search)
+      )
+    );
   }
 }
 

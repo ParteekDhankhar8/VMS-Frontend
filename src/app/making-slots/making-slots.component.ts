@@ -20,6 +20,7 @@ export class MakingSlotsComponent implements OnInit {
   adminUserId = 1;
   responseMsg = '';
   vaccines: Array<{vaccineId: number, name: string, description: string}> = [];
+  showSuccessPopup = false;
 
   constructor(private http: HttpClient) {}
 
@@ -44,12 +45,26 @@ export class MakingSlotsComponent implements OnInit {
     this.http.post(url, this.slotForm).subscribe({
       next: (res) => {
         console.log('Success:', res);
-        this.responseMsg = 'Slot added successfully!';
+        this.showSuccessPopup = true;
       },
       error: (err) => {
         console.error('Error:', err);
         this.responseMsg = 'Error adding slot.';
       }
     });
+  }
+
+  onPopupOk() {
+    this.showSuccessPopup = false;
+    this.slotForm = {
+      slotId: 0,
+      vaccineName: '',
+      locationCity: '',
+      locationState: '',
+      locationCountry: '',
+      slotDate: '',
+      availableCount: 0,
+      vaccinationCenterName: ''
+    };
   }
 }

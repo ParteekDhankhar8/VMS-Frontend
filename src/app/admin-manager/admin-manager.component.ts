@@ -15,6 +15,7 @@ interface Vaccine {
 export class AdminManagerComponent implements OnInit {
   vaccines: Vaccine[] = [];
   vaccineError: string = '';
+  searchText: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -36,5 +37,15 @@ export class AdminManagerComponent implements OnInit {
         console.error('Vaccine fetch error:', err);
       }
     });
+  }
+
+  get filteredVaccines() {
+    if (!this.searchText) return this.vaccines;
+    const search = this.searchText.toLowerCase();
+    return this.vaccines.filter(v =>
+      Object.values(v).some(val =>
+        val && val.toString().toLowerCase().includes(search)
+      )
+    );
   }
 }

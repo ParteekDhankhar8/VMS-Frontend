@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class UsertableComponent {
   bookings: any[] = [];
   fetchError: string = '';
+  searchText: string = '';
 
   constructor(private http: HttpClient) {
     this.fetchBookings();
@@ -34,5 +35,15 @@ export class UsertableComponent {
         this.fetchError = 'API error: could not fetch bookings.';
       }
     });
+  }
+
+  get filteredBookings() {
+    if (!this.searchText) return this.bookings;
+    const search = this.searchText.toLowerCase();
+    return this.bookings.filter(b =>
+      Object.values(b).some(val =>
+        val && val.toString().toLowerCase().includes(search)
+      )
+    );
   }
 }

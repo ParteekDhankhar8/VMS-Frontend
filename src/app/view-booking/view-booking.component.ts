@@ -19,9 +19,7 @@ interface SlotApiResponse {
   styleUrls: ['./view-booking.component.css']
 })
 export class ViewBookingComponent implements OnInit {
-  userBookings = [
-    { name: 'Alice', vaccine: 'Covaxin', date: '2025-06-25', time: '09:00 AM', location: 'Chennai' }
-  ];
+  userBookings: any[] = [];
   familyBookings: any[] = [];
   userId: number = 1; // Replace with actual userId from auth context if available
   slots: SlotApiResponse[] = [];
@@ -41,13 +39,35 @@ export class ViewBookingComponent implements OnInit {
           } catch (e) {
             this.slots = [];
           }
+          this.getUserBookings();
           this.getFamilyBookings();
         },
         error: () => {
           this.slots = [];
+          this.getUserBookings();
           this.getFamilyBookings();
         }
       });
+  }
+
+  getUserBookings() {
+    // Example: fetch user bookings from backend or localStorage
+    // Here, we use localStorage for demonstration
+    const allBookings = JSON.parse(localStorage.getItem('allBookings') || '[]');
+    // Filter for user bookings (no memberId)
+    const userBookingsRaw = allBookings.filter((b: any) => !b.memberId && b.userId === this.userId);
+    // Map slot details into each user booking
+    this.userBookings = userBookingsRaw.map((ub: any) => {
+      const slot = this.slots.find(s => s.slotId === ub.slotId);
+      return {
+        ...ub,
+        vaccineName: slot ? slot.vaccineName : ub.vaccine,
+        slotDate: slot ? slot.slotDate : ub.date,
+        vaccinationCenterName: slot ? slot.vaccinationCenterName : '-',
+        locationState: slot ? slot.locationState : '-',
+        locationCity: slot ? slot.locationCity : ub.location
+      };
+    });
   }
 
   getFamilyBookings() {

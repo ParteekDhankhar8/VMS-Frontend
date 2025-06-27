@@ -87,6 +87,34 @@ select option[disabled] {
   cursor: not-allowed;
 }
 
+.custom-popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.custom-popup-modal {
+  background: #fff;
+  padding: 32px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  text-align: center;
+  min-width: 300px;
+}
+
+.custom-popup-content h4 {
+  margin-bottom: 18px;
+  color: #28a745;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 25px;
