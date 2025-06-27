@@ -6,16 +6,15 @@ body, html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
  
-.booking-wrapper {
+ .fambook-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f5f7fa;
+  min-height: 86vh;
   padding: 20px;
 }
+ .container {
  
-.booking-container {
   width: 100%;
   margin-bottom: 120px;
   max-width: 700px;
@@ -24,8 +23,8 @@ body, html {
   border: 3px solid #007bff;
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
- 
  
 h2 {
   text-align: center;
@@ -49,13 +48,7 @@ h2 {
   margin-bottom: 0;
 }
  
-/* .form-group-inline .form-control {
-  flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-} */
+
  
 select option[disabled] {
   color: #aaa;

@@ -1,16 +1,18 @@
-<div class="container mt-4">
-  <h3>Add Vaccine</h3>
-  <div *ngIf="addVaccineError" class="alert alert-danger">{{ addVaccineError }}</div>
-  <div *ngIf="addVaccineSuccess" class="alert alert-success">{{ addVaccineSuccess }}</div>
-  <form (ngSubmit)="addVaccine()" #vaccineForm="ngForm">
-    <div class="mb-3">
-      <label for="vaccineName" class="form-label">Vaccine Name</label>
-      <input id="vaccineName" class="form-control" [(ngModel)]="vaccineName" name="vaccineName" required />
-    </div>
-    <div class="mb-3">
-      <label for="vaccineDescription" class="form-label">Description</label>
-      <input id="vaccineDescription" class="form-control" [(ngModel)]="vaccineDescription" name="vaccineDescription" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Add Vaccine</button>
-  </form>
-</div>
+
+  <div class="container">
+    <h2 class="mb-4 text-center text-primary">Add Vaccine</h2>
+    <div *ngIf="addVaccineError" class="alert alert-danger">{{ addVaccineError }}</div>
+    <div *ngIf="addVaccineSuccess" class="alert alert-success">{{ addVaccineSuccess }}</div>
+    <form (ngSubmit)="addVaccine()" #vaccineForm="ngForm">
+      <div class="form-group-inline">
+        <label for="vaccineName" class="form-label">Vaccine Name</label>
+        <input id="vaccineName" class="form-control" [(ngModel)]="vaccineName" name="vaccineName" required />
+      </div>
+      <div class="form-group-inline">
+        <label for="vaccineDescription" class="form-label">Description</label>
+        <input id="vaccineDescription" class="form-control" [(ngModel)]="vaccineDescription" name="vaccineDescription" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Add Vaccine</button>
+    </form>
+  </div>
+
