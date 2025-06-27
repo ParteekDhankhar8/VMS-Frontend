@@ -102,6 +102,16 @@
       </select>
     </div>
  
+    <div class="form-group-inline">
+      <label for="vcn">Vaccination Center Name:</label>
+      <select id="vcn" class="form-control" [(ngModel)]="vaccinationCenterName" [disabled]="!selectedState">
+        <option value="">-- Select Vaccination Center --</option>
+        <option *ngFor="let center of slots" [value]="center.vaccinationCenterName">
+          {{ center.vaccinationCenterName }}
+        </option>
+      </select>
+    </div>
+
     <!-- Date -->
     <div class="form-group-inline">
       <label>Select Date:</label>

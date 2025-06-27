@@ -12,8 +12,7 @@ export interface BookingData {
   vaccinationCenterName: string;
   city: string;
   state: string;
-  slotDate: string;
-  slotTime: string;
+  slotDateTime: string;
 }
  
 @Injectable({

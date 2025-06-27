@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import emailjs from '@emailjs/browser';
 import { ElementRef, ViewChild } from '@angular/core';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,94 +10,78 @@ import { ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent {
-  resetMethod: 'email' | 'phone' = 'email';
-  email = '';
-  phone = '';
+  step = 1;
   message = '';
-  selectMethod(method: 'email' | 'phone'): void {
-    this.resetMethod = method;
-    this.message = ''; 
-  }
-  sanitizePhone(event: any): void {
-    const input = event.target.value || '';
-    this.phone = input.replace(/[^0-9]/g, '').slice(0, 10);
-  }
-
-  messageColor = '';
-  @ViewChild('resetForm', { read: ElementRef }) resetForm!: ElementRef<HTMLFormElement>;
-  resetLink: string = '';
-
-  // onSubmit(): void {
-  //   if (this.resetMethod === 'email') {
-  //     if (this.email && this.isValidEmail(this.email)) {
-  //       this.message = `Reset link has been sent to ${this.email}`;
-  //       this.messageColor = 'success';
-  //     } else {
-  //       this.message = '❌ Please enter a valid email address';
-  //       this.messageColor = 'danger';
-  //     }
-  //   } else if (this.resetMethod === 'phone') {
-  //     const isPhoneValid = /^[7-9][0-9]{9}$/.test(this.phone);
-  //     if (this.phone && isPhoneValid) {
-  //       this.message = `Reset code has been sent to ${this.phone}`;
-  //       this.messageColor = 'success';
-  //     } else {
-  //       this.message = '❌ Please enter a valid phone number';
-  //       this.messageColor = 'danger';
-  //     }
-  //   }
-  // }
-
-
-onSubmit(): void {
-  if (this.resetMethod === 'email') {
-    this.email = this.email.trim();
-
-    if (this.email && this.isValidEmail(this.email)) {
-      this.email = this.email.trim();
-      this.resetLink = `https://your-app.com/reset-password?email=${encodeURIComponent(this.email)}`;
-      console.log('📧 Email value:', this.email);
-      console.log('Form content:', this.resetForm.nativeElement);
-
-
-      emailjs.sendForm(
-        'service_l85chpr',
-        'template_vfjorhk',
-        this.resetForm.nativeElement,
-        'tIH9CWdTodLdCyRQQ'
-      ).then(() => {
-        this.message = `Reset link has been sent to ${this.email}`;
-        this.messageColor = 'success';
-      }).catch((error) => {
-        console.error('EmailJS error:', error);
-        this.message = '❌ Failed to send email. Try again later.';
-        this.messageColor = 'danger';
-      });
-
-    } else {
-      this.message = '❌ Please enter a valid email address';
-      this.messageColor = 'danger';
+  isSubmitting = false;
+ 
+  emailForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]]
+  });
+ 
+  resetForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    token: ['', Validators.required],
+    newPassword: ['', [Validators.required, Validators.minLength(6)]]
+  });
+ 
+  constructor(private fb: FormBuilder, private authService: AuthServiceService) {}
+ 
+  sendToken() {
+    if (this.emailForm.invalid) {
+      this.message = 'Please enter a valid email.';
+      return;
     }
+    this.isSubmitting = true;
+    this.authService.forgotPassword(this.emailForm.value.email!).subscribe(
+      (res: string) => {
+        if (res) {
+         
+          this.message = 'Token generated! Please ask the admin for your reset token (check backend console).';
+          this.resetForm.patchValue({ email: this.emailForm.value.email });
+          this.step = 2;
+        } else {
+          console.log(res)
+          this.message = 'User not found or not allowed to reset password.';
+        }
+        this.isSubmitting = false;
+      },
+      () => {
+        this.message = 'Failed to send reset token.';
+        this.isSubmitting = false;
+      }
+    );
   }
-
-}
-
-
-
-
-  
-  isFormValid(): boolean {
-    if (this.resetMethod === 'email') {
-      return this.email.trim().length > 0;
-    } else if (this.resetMethod === 'phone') {
-      return /^[7-9][0-9]{9}$/.test(this.phone);
+ 
+  resetPassword() {
+    if (this.resetForm.invalid) {
+      this.message = 'Please fill all fields correctly.';
+      return;
     }
-    return false;
+    this.isSubmitting = true;
+    const { email, token, newPassword } = this.resetForm.value;
+    this.authService.resetPassword({
+      email: email!,
+      token: token!,
+      newPassword: newPassword!
+    }).subscribe(
+      (res: string) => {
+        if (res === 'success') {
+          this.message = 'Password reset successful!';
+          this.resetForm.reset();
+          this.emailForm.reset();
+          this.step = 1;
+        } else {
+          this.message = 'Invalid token or user. Please check your details.';
+        }
+        this.isSubmitting = false;
+      },
+      err => {
+        this.message = 'Failed to reset password.';
+        this.isSubmitting = false;
+      }
+    );
   }
-  isValidEmail(email: string): boolean {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailPattern.test(email.trim());
-  }
-    
+ 
+ }
   
-}
+

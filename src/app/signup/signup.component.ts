@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SignUpServiceService, SignupData } from '../services/sign-up-service.service';
 
 @Component({
   selector: 'app-signup',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  constructor(private router: Router){}
+  constructor(private router: Router, private signUpService: SignUpServiceService){}
   name = '';
   email = '';
   age ='';
@@ -16,6 +17,10 @@ export class SignupComponent {
   city='';
   password = '';
   confirmPassword = '';
+  phone = '';
+  country = '';
+  signupError = '';
+  signupSuccess = '';
 
   get passwordMismatch(): boolean {
     return !!this.password && !!this.confirmPassword && this.password !== this.confirmPassword;
@@ -23,9 +28,29 @@ export class SignupComponent {
 
   onRegister() {
     if (!this.passwordMismatch) {
-      console.log('Registered:', this.name, this.email);
-      alert('Registeration successfull');
-      this.router.navigate(['/login']);
+      const signupData: SignupData = {
+        fullName: this.name,
+        email: this.email,
+        phone: this.phone,
+        password: this.password,
+        city: this.city,
+        state: this.state,
+        country: this.country,
+        age: Number(this.age),
+        gender: this.gender
+      };
+      this.signUpService.registerUser(signupData).subscribe({
+        next: (res) => {
+          this.signupSuccess = 'Registration successful!';
+          this.signupError = '';
+          alert('Registration successful!');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          this.signupError = 'Registration failed. Please try again.';
+          this.signupSuccess = '';
+        }
+      });
     }
   }
   captchaCode: string = '';

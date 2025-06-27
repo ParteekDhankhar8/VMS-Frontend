@@ -7,17 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
   isEditMode = false;
+  currentUser = localStorage.getItem('currentUser')
 
   // User data fields
   user = {
-    name: '',
-    patientId: '',
-    state: '',
-    city: '',
-    email: '',
-    phone: '',
-    age: '',
-    gender: ''
+    name: JSON.parse(this.currentUser || '{}').fullName || '',
+    patientId: JSON.parse(this.currentUser || '{}').userId || '',
+    state: JSON.parse(this.currentUser || '{}').state || '',
+    city: JSON.parse(this.currentUser || '{}').city || '',
+    email: JSON.parse(this.currentUser || '{}').email || '',
+    phone: JSON.parse(this.currentUser || '{}').phone || '',
+    age: JSON.parse(this.currentUser || '{}').age || '',
+    gender: JSON.parse(this.currentUser || '{}').gender || '',
   };
 
   // Toggle edit mode
