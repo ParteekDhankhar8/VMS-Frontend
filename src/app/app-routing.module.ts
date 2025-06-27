@@ -31,8 +31,13 @@ const routes: Routes = [
   { path: 'navbar', component: NavbarComponent },
   { path: 'sidebar', component: SidebarComponent },
   { path: 'vaccinehistory', component: VaccinehistoryComponent },
-  
-  
+  { path: 'booking', component: BookingComponent },
+      { path: 'family-booking', component: FamilyBookingComponent },
+      { path: 'view-schedule', component: RescheduleviewComponent },
+      { path: 'user-profile', component: UserProfileComponent },
+      { path: 'view-booking', component: ViewBookingComponent },
+      {path: 'user-dashboard', component: UserComponent },
+
   
   
   {path:'certificate',component:CertificateComponent},
@@ -42,18 +47,6 @@ const routes: Routes = [
   { path:'making-slots',component: MakingSlotsComponent},
 
 
-   {
-    path: 'user-dashboard',
-    component: UserComponent,
-    children: [
-      { path: '', redirectTo: 'user-dashboard', pathMatch: 'full' },
-      { path: 'booking', component: BookingComponent },
-      { path: 'family-booking', component: FamilyBookingComponent },
-      { path: 'view-schedule', component: RescheduleviewComponent },
-      { path: 'user-profile', component: UserProfileComponent },
-      { path: 'view-booking', component: ViewBookingComponent },
-    ]
-  },
 
 
 

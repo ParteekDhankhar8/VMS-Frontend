@@ -121,7 +121,7 @@ export class BookingComponent implements OnInit {
   minDate: string = '';
   country: string = 'India';
   vaccinationCenterName: string = '';
-  userId: number = 10;
+  currentUser: any = localStorage.getItem('currentUser')
   memberId: number = 0;
   slotId: number = 0;
 
@@ -202,8 +202,11 @@ export class BookingComponent implements OnInit {
     if (!this.selectedVaccine || !this.selectedState || !this.selectedCity || !this.selectedDate) {
       alert('❌ Please fill all details before booking.');
     } else {
+      console.log(JSON.parse(this.currentUser)?.userId)
+      const userId = JSON.parse(this.currentUser)?.userId;
+      console.log(userId)
       const booking = {
-        userId: this.userId,
+        userId: userId,
         memberId: this.memberId,
         country: this.country,
         slotId: this.slotId,
@@ -213,6 +216,8 @@ export class BookingComponent implements OnInit {
         state: this.selectedState,
         slotDateTime: this.selectedDate,
       };
+
+      console.log(booking)
       this.bookingService.bookAppointment(booking).subscribe({
         next: (response) => {
           alert('✅ Appointment booked successfully!');

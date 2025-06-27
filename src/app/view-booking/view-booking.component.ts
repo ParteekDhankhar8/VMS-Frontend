@@ -59,9 +59,10 @@ export class ViewBookingComponent implements OnInit {
           return {
             ...fb,
             vaccineName: slot ? slot.vaccineName : '',
-            date: slot ? slot.slotDate.split('T')[0] : '',
-            time: slot ? (slot.slotDate.split('T')[1] ? slot.slotDate.split('T')[1].substring(0,5) : '') : '',
-            location: slot ? `${slot.locationCity}, ${slot.locationState}` : ''
+            slotDate: slot ? slot.slotDate : '',
+            vaccinationCenterName: slot ? slot.vaccinationCenterName : '',
+            locationState: slot ? slot.locationState : '',
+            locationCity: slot ? slot.locationCity : ''
           };
         });
       },
