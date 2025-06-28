@@ -1,9 +1,27 @@
-
 .card {
-max-width:1000px;
-margin:auto;
-margin-top: 30px;
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 30px;
   border-radius: 8px;
-  border:1px solid rgb(12, 71, 233);
+  border: 1px solid rgb(12, 71, 233);
+  box-shadow: 0 2px 12px rgba(12, 71, 233, 0.08);
+  background: #fff;
+  padding: 32px 28px;
+}
 
+@media (max-width: 768px) {
+  .card {
+    max-width: 98vw;
+    padding: 18px 8px;
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    max-width: 100vw;
+    padding: 8px 2px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
 }

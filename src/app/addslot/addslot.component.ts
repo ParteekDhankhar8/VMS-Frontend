@@ -19,6 +19,9 @@ interface SlotApiResponse {
   styleUrls: ['./addslot.component.css']
 })
 export class AddslotComponent implements OnInit {
+  vaccineList(vaccineList: any) {
+    throw new Error('Method not implemented.');
+  }
   slots: SlotApiResponse[] = [];
   searchText: string = '';
   adminUserId: number = 1; // Replace with actual admin user id from auth context if available

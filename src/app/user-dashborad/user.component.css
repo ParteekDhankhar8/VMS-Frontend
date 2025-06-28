@@ -199,25 +199,102 @@
 /* Main content area fills remaining space */
 .main-content {
   flex-grow: 1;
-  overflow-x: auto; /* allow horizontal scroll if content overflows */
+  overflow: auto; /* allow horizontal scroll if content overflows */
   background-color: #f9f9f9;
-  min-height: 100vh; /* at least full height */
+  height: 100vh; /* at least full height */
   padding-bottom: 100px; /* space for footer */
 }
 
-/* Responsive: stack sidebar on top on small screens */
+/* Responsive: stack sidebar on top and make it collapsible/short on small screens */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 70px;
+    min-width: 70px;
+    padding: 0.5rem 0.2rem;
+    overflow-x: hidden;
+    border-radius: 0 12px 12px 0;
+    transition: width 0.2s;
+  }
+  .sidebar .nav-link {
+    padding: 10px 6px;
+    font-size: 0.98rem;
+    text-align: center;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sidebar .nav-link span {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .admin-wrapper {
     flex-direction: column;
   }
   .sidebar {
-    width: 100%;
+    width: 100vw;
+    min-width: 0;
     min-height: auto;
     border-right: none;
     border-bottom: 1px solid #dee2e6;
+    border-radius: 0 0 12px 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.3rem 0;
+    position: static;
+    top: unset;
+    z-index: 2;
+    overflow-x: auto;
+  }
+  .sidebar .nav-link {
+    flex: 1 1 0;
+    padding: 8px 2px;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 48px;
+  }
+  .sidebar .nav-link span {
+    display: none;
   }
   .main-content {
     min-height: auto;
     padding-bottom: 50px;
+    overflow-x: auto;
   }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100vw;
+    min-width: 0;
+    padding: 0.1rem 0;
+    border-radius: 0 0 8px 8px;
+  }
+  .sidebar .nav-link {
+    font-size: 0.9rem;
+    min-width: 36px;
+    padding: 6px 1px;
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+  overflow-x: auto;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+/* Optional: show only icons in sidebar on small screens, add .icon class to nav-link icons in HTML */
+.sidebar .nav-link .icon {
+  display: inline-block;
+  font-size: 1.3em;
+  vertical-align: middle;
 }

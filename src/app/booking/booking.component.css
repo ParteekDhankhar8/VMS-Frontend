@@ -1,3 +1,4 @@
+/* Use Bootstrap utility classes for layout and responsiveness */
 
 body, html {
   height: 100%;
@@ -7,107 +8,94 @@ body, html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
- .book-wrapper {
+.book-wrapper {
+  min-height: 86vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 86vh;
-  padding: 20px;
+  padding: 1.5rem;
+  background: #f5f7fa;
 }
 
 .container {
- width: 100%;
-  margin-bottom: 120px;
-  max-width: 700px;
-  background: #ffffff;
-  padding: 40px 50px;
+  background: #fff;
   border: 3px solid #007bff;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  padding: 2rem 1.5rem;
+  max-width: 700px;
+  width: 100%;
+  margin-bottom: 120px;
   text-align: center;
 }
- 
-
- 
 
 h2 {
-  text-align: center;
-  margin-bottom: 40px;
   color: #007bff;
   font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
 }
- 
 
 .form-group-inline {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  gap: 20px;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
 }
- 
+
 .form-group-inline label {
-  width: 140px;
+  min-width: 120px;
   font-weight: 600;
   color: #333;
   margin-bottom: 0;
 }
- 
+
 .form-group-inline .form-control {
   flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  height: auto;
+  min-width: 0;
 }
- 
 
-select option[disabled] {
-  color: #aaa;
-}
- 
 .btn-primary {
   width: 100%;
-  padding: 14px;
-  font-size: 17px;
   font-weight: bold;
-  border-radius: 30px;
-  margin-top: 30px;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-  transition: all 0.3s ease-in-out;
+  border-radius: 2rem;
+  margin-top: 1.5rem;
 }
- 
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #004085;
-}
- 
-.btn-primary:disabled {
-  background-color: #ccc;
-  border-color: #ccc;
-  cursor: not-allowed;
-}
- 
 
+/* Responsive tweaks using Bootstrap breakpoints */
 @media (max-width: 768px) {
-  .booking-container {
-    padding: 25px;
-    max-width: 95%;
+  .container {
+    padding: 1rem 0.5rem;
+    border-width: 2px;
+    border-radius: 0.75rem;
   }
- 
   .form-group-inline {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5rem;
   }
- 
   .form-group-inline label {
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 0.25rem;
+    font-size: 0.97rem;
   }
- 
-  .form-group-inline .form-control {
-    width: 100%;
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
   }
 }
- 
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0.5rem 0.1rem;
+    border-width: 1.5px;
+    border-radius: 0.5rem;
+  }
+  h2 {
+    font-size: 1rem;
+  }
+  .form-group-inline label {
+    font-size: 0.92rem;
+  }
+}

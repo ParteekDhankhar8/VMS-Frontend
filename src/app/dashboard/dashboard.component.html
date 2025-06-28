@@ -1,10 +1,14 @@
 
 <div class="card shadow-sm p-4 mb-4 bg-light rounded">
-  <h4 class="text-primary mb-3">Upcoming Appointments</h4>
-
-  <div class="border-top pt-3">
-    <p><strong>Next Appointment:</strong> 25th June 2025</p>
-    <p><strong>Vaccine Name:</strong> Hepatitis B</p>
-    <p><strong>Date of Appointment:</strong> 25/06/2025</p>
-  </div>
+  <h4 class="text-primary mb-3">Upcoming Appointments</h4>
+ 
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="text-danger">{{ error }}</div>
+  <div *ngIf="appointment && !loading">
+    <div class="border-top pt-3">
+      <p><strong>Next Appointment:</strong> {{ appointment.nextAppointment }}</p>
+      <p><strong>Vaccine Name:</strong> {{ appointment.vaccineName }}</p>
+      <p><strong>Date of Appointment:</strong> {{ appointment.dateOfAppointment }}</p>
+    </div>
+  </div>
 </div>
