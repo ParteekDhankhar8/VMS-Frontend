@@ -135,3 +135,81 @@ body, html, :host {
   overflow-y: auto;
 }
 */
+
+@media (max-width: 992px) {
+  .carousel-inner {
+    height: 200px;
+  }
+  .slider-container {
+    height: 200px;
+  }
+  .about-box {
+    padding: 14px;
+    gap: 12px;
+  }
+  .photo img {
+    width: 120px;
+    height: 120px;
+  }
+  .description h2 {
+    font-size: 20px;
+  }
+  .description p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .head {
+    font-size: 1.3rem;
+    padding: 8px 0;
+  }
+  .carousel-inner,
+  .slider-container {
+    height: 120px;
+  }
+  .box-grid {
+    gap: 12px;
+    padding: 8px;
+  }
+  .about-box {
+    padding: 8px;
+    border-radius: 6px;
+    gap: 6px;
+  }
+  .photo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+  }
+  .description h2 {
+    font-size: 16px;
+  }
+  .description p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 400px) {
+  .head {
+    font-size: 1.1rem;
+  }
+  .carousel-inner,
+  .slider-container {
+    height: 70px;
+  }
+  .about-box {
+    padding: 4px;
+    gap: 2px;
+  }
+  .photo img {
+    width: 50px;
+    height: 50px;
+  }
+  .description h2 {
+    font-size: 13px;
+  }
+  .description p {
+    font-size: 11px;
+  }
+}

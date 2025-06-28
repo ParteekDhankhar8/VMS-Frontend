@@ -1,17 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppointmentService } from '../services/appointmentservice.service';
+
+interface Appointment {
+  nextAppointment: string;
+  vaccineName: string;
+  dateOfAppointment: string;
+}
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
-/*displayedColumns: string[] = ['user', 'vaccine', 'date', 'status'];
-  recentActivity = [
-    { user: 'Saundarya', vaccine: 'Covaxin', date: '2025-06-20', status: 'Completed' },
-    { user: 'Shruti', vaccine: 'Covishield', date: '2025-06-21', status: 'Scheduled' },
-    { user: 'Kartikeyan', vaccine: 'Sputnik', date: '2025-06-19', status: 'Cancelled' },
-    { user: 'Sahil', vaccine: 'Covaxin', date: '2025-06-22', status: 'Cancelled' },
-    { user: 'Prateek', vaccine: 'Covaxin', date: '2025-06-24', status: 'Scheduled' },
-  ];*/
+export class DashboardComponent implements OnInit {
+  appointment?: Appointment;
+  loading = false;
+  error = '';
+
+  constructor(private appointmentService: AppointmentService) {}
+
+  ngOnInit() {
+    this.fetchNextAppointment();
+  }
+
+  fetchNextAppointment() {
+    this.loading = true;
+    this.error = '';
+    this.appointmentService.getNextAppointment().subscribe({
+      next: (data: Appointment) => {
+        this.appointment = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Failed to load appointment.';
+        this.loading = false;
+      }
+    });
+  }
 }

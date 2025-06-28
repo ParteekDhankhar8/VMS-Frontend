@@ -1,4 +1,3 @@
-
 .sidebar-full {
   min-height: 100vh;
   background: #f8f9fa;
@@ -84,23 +83,65 @@
   border-radius: 0.5rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .sidebar-full {
-    padding: 1rem 0.2rem;
+    padding: 1.2rem 0.2rem;
   }
   .card {
-    max-width: 100%;
-    margin-bottom: 1rem;
+    max-width: 95vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar-full {
+    padding: 0.5rem 0.1rem;
+  }
+  .card {
+    max-width: 100vw;
+    margin-bottom: 0.7rem;
+    border-radius: 0.7rem;
+  }
+  .card-header {
+    font-size: 1rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.7rem 0.7rem 0 0;
+  }
+  .rounded-circle {
+    width: 70px;
+    height: 70px;
+  }
+  .card-title {
+    font-size: 1.05rem;
   }
   .list-group-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
     padding: 0.5rem 0.5rem;
+    font-size: 0.97rem;
   }
   .list-group-item input.form-control-sm,
   .list-group-item select.form-control-sm {
     width: 100%;
     max-width: 100%;
+    font-size: 0.97rem;
+  }
+  .btn {
+    font-size: 0.97rem;
+    padding: 0.4rem 0.7rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-header {
+    font-size: 0.92rem;
+    padding: 0.3rem 0.4rem;
+  }
+  .card-title {
+    font-size: 0.95rem;
+  }
+  .rounded-circle {
+    width: 48px;
+    height: 48px;
   }
 }
