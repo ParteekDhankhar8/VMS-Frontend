@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserBookingService } from '../services/userbooking.service';
+import { UserSlotBookingService } from '../services/userslotbooking.service';
 
 @Component({
   selector: 'app-usertable',
@@ -11,7 +13,7 @@ export class UsertableComponent {
   fetchError: string = '';
   searchText: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userBookingService: UserBookingService, private userSlotBookingService: UserSlotBookingService) {
     this.fetchBookings();
   }
 
@@ -33,6 +35,25 @@ export class UsertableComponent {
         console.error('Error fetching bookings:', err);
         this.bookings = [];
         this.fetchError = 'API error: could not fetch bookings.';
+      }
+    });
+  }
+
+  deleteBooking(bookingId: number, index: number) {
+    if (!confirm('Are you sure you want to delete this booking?')) return;
+    // Delete from backend first
+    this.userSlotBookingService.deleteUserSlotBooking(bookingId).subscribe({
+      next: () => {
+        this.bookings.splice(index, 1);
+        alert('Booking deleted successfully.');
+      },
+      error: (err) => {
+        console.error('Delete booking error:', err);
+        let msg = 'Failed to delete booking.';
+        if (err && err.error) {
+          msg += `\n${err.error}`;
+        }
+        alert(msg);
       }
     });
   }

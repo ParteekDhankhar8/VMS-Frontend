@@ -22,10 +22,10 @@ export class RescheduleviewComponent implements OnInit {
 
   getFamilyBookings() {
     this.viewFamilyBookingService.getFamilyMembers(this.userId).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.familyBookings = data;
       },
-      error: (err) => {
+      error: (err: any) => {
         alert('Failed to fetch family bookings.');
       }
     });

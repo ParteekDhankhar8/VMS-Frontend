@@ -14,10 +14,11 @@
           <th>Slot Date</th>
           <th>Available Count</th>
           <th>Vaccination Center Name</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let slot of filteredSlots">
+        <tr *ngFor="let slot of filteredSlots; let i = index">
           <td>{{ slot.slotId }}</td>
           <td>{{ slot.vaccineName }}</td>
           <td>{{ slot.locationCity }}</td>
@@ -26,6 +27,9 @@
           <td>{{ slot.slotDate | date:'medium' }}</td>
           <td>{{ slot.availableCount }}</td>
           <td>{{ slot.vaccinationCenterName }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteSlot(slot.slotId, i)">Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>

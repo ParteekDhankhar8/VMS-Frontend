@@ -57,7 +57,7 @@
             <td>{{ booking.fullName }}</td>
             <td>{{ booking.age }}</td>
             <td>{{ booking.gender }}</td>
-            <td>{{ booking.userId }}</td>
+            <!-- <td>{{ booking.userId }}</td> -->
             <td>
               <a [routerLink]="['/reschedulebook']" [queryParams]="{ bookingId: booking.memberId }" class="text-danger">Reschedule Booking</a>
             </td>

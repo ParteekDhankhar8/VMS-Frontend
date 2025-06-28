@@ -25,7 +25,7 @@ export class FamilyBookingComponent implements OnInit {
     private familyBookingService: FamilyBookingService,
     private http: HttpClient
   ) {}
-
+  currentUser: any = localStorage.getItem('currentUser');
   slots: SlotApiResponse[] = [];
   recipientName: string = '';
   selectedVaccine: string = '';
@@ -127,19 +127,26 @@ export class FamilyBookingComponent implements OnInit {
     ) {
       alert('Please fill all details before booking.');
     } else {
+      const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
       const familyMember: FamilyMemberData = {
         memberId: 0, // Let backend assign or set as needed
         fullName: this.recipientName,
         age: this.age,
         gender: this.gender,
-        userId: this.userId
+        userId: userId,
+        vaccineName: this.selectedVaccine,
+        state: this.selectedState,
+        city: this.selectedCity,
+        vaccinationCenterName: this.selectedVaccinationCenter,
+        slotDate: this.selectedDate
+
       };
       this.familyBookingService.addFamilyMember(familyMember).subscribe({
-        next: (response) => {
+        next: (response: any) => {
           alert(`✅ Family member added and appointment booked for ${this.recipientName} (${this.selectedMember}) for ${this.selectedVaccine} in ${this.selectedCity}, ${this.selectedState} on ${this.selectedDate}`);
           this.router.navigate(['/view-booking']);
         },
-        error: (err) => {
+        error: (err: any) => {
           alert('❌ Failed to add family member. Please try again.');
         }
       });

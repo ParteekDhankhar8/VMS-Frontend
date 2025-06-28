@@ -22,6 +22,9 @@ export class SignupComponent {
   signupError = '';
   signupSuccess = '';
 
+  showPassword = false;
+  showConfirmPassword = false;
+
   get passwordMismatch(): boolean {
     return !!this.password && !!this.confirmPassword && this.password !== this.confirmPassword;
   }
@@ -69,6 +72,6 @@ export class SignupComponent {
     }
     
     verifyCaptcha(): void {
-      this.captchaStatus = (this.userCaptcha.toUpperCase() === this.captchaCode) ? 'valid' : 'invalid';
+      this.captchaStatus = (this.userCaptcha === this.captchaCode) ? 'valid' : 'invalid';
     }
 }

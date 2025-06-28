@@ -199,12 +199,23 @@ export class BookingComponent implements OnInit {
   
 
   bookAppointment() {
-    if (!this.selectedVaccine || !this.selectedState || !this.selectedCity || !this.selectedDate) {
+    if (!this.selectedVaccine || !this.selectedState || !this.selectedCity || !this.selectedDate || !this.vaccinationCenterName) {
       alert('❌ Please fill all details before booking.');
     } else {
-      console.log(JSON.parse(this.currentUser)?.userId)
+      // Find the slotId based on user selections
+      const selectedSlot = this.slots.find(slot =>
+        slot.vaccineName === this.selectedVaccine &&
+        slot.locationState === this.selectedState &&
+        slot.locationCity === this.selectedCity &&
+        slot.slotDate === this.selectedDate &&
+        slot.vaccinationCenterName === this.vaccinationCenterName
+      );
+      if (!selectedSlot) {
+        alert('❌ No available slot found for the selected details.');
+        return;
+      }
+      this.slotId = selectedSlot.slotId;
       const userId = JSON.parse(this.currentUser)?.userId;
-      console.log(userId)
       const booking = {
         userId: userId,
         memberId: this.memberId,
@@ -216,19 +227,16 @@ export class BookingComponent implements OnInit {
         state: this.selectedState,
         slotDateTime: this.selectedDate,
       };
-
-      console.log(booking)
       this.bookingService.bookAppointment(booking).subscribe({
-        next: (response) => {
+        next: (response: any) => {
           alert('✅ Appointment booked successfully!');
           this.router.navigate(['/view-booking']);
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Booking error:', err);
           alert('❌ Failed to book appointment. ' + (err?.error || 'Please try again.'));
         }
       });
-
     }
   }
 }

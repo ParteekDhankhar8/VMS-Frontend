@@ -8,6 +8,11 @@ export interface FamilyMemberData {
   age: number;
   gender: string;
   userId: number;
+  vaccineName: string;
+  state: string;
+  city: string;
+  vaccinationCenterName: string;
+  slotDate: string;
 }
 
 @Injectable({
@@ -19,6 +24,6 @@ export class FamilyBookingService {
   constructor(private http: HttpClient) {}
 
   addFamilyMember(data: FamilyMemberData): Observable<any> {
-    return this.http.post(this.apiUrl, data, { responseType: 'text' });
+    return this.http.post(this.apiUrl, data, { responseType: 'text' as 'json' });
   }
 }

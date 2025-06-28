@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DeleteVaccineService } from '../services/deletevaccine.service';
 
 interface Vaccine {
   vaccineId: number;
@@ -17,7 +18,7 @@ export class AdminManagerComponent implements OnInit {
   vaccineError: string = '';
   searchText: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private deleteVaccineService: DeleteVaccineService) {}
 
   ngOnInit(): void {
     this.fetchVaccines();
@@ -47,5 +48,26 @@ export class AdminManagerComponent implements OnInit {
         val && val.toString().toLowerCase().includes(search)
       )
     );
+  }
+
+  deleteVaccine(vaccineId: number, index: number) {
+    if (!confirm('Are you sure you want to delete this vaccine?')) return;
+    this.deleteVaccineService.deleteVaccine(vaccineId, 1).subscribe({
+      next: () => {
+        this.vaccines.splice(index, 1);
+        alert('Vaccine deleted successfully.');
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          alert('Failed to delete vaccine. Admin access required or session expired. Please login as admin.');
+        } else if (err.status === 200 || err.status === 204) {
+          this.vaccines.splice(index, 1);
+          alert('Vaccine deleted successfully.');
+        } else {
+          alert('Failed to delete vaccine.');
+        }
+        console.error('Delete vaccine error:', err);
+      }
+    });
   }
 }

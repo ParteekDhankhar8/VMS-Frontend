@@ -50,12 +50,29 @@
            <div class="row mb-3">
             <div class="col-md-6 mb-3 mb-md-0">
               <label class="form-label fw-medium">Password</label>
-            <input type="password" class="form-control custom-input" name="password" [(ngModel)]="password" required minlength="6" />
+              <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control custom-input" name="password" [(ngModel)]="password" required minlength="8" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$" #passwordRef="ngModel" />
+                <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword" tabindex="-1" aria-label="Show/Hide Password">
+                  <span [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div *ngIf="passwordRef.invalid && passwordRef.touched" class="invalid-feedback d-block">
+                <small *ngIf="passwordRef.errors?.['required']">Password is required</small>
+                <small *ngIf="passwordRef.errors?.['minlength']">Minimum 8 characters</small>
+                <small *ngIf="passwordRef.errors?.['pattern']">
+                  Password must contain at least 1 letter, 1 number, and 1 special character
+                </small>
+              </div>
             </div>
             <div class="col-md-6">
               <label class="form-label fw-medium">Confirm Password</label>
-            <input type="password" class="form-control custom-input" [(ngModel)]="confirmPassword" name="confirmPassword" required />
-            <div *ngIf="passwordMismatch" class="text-danger small mt-1">Passwords do not match</div>
+              <div class="input-group">
+                <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control custom-input" [(ngModel)]="confirmPassword" name="confirmPassword" required #confirmPasswordRef="ngModel" />
+                <button type="button" class="btn btn-outline-secondary" (click)="showConfirmPassword = !showConfirmPassword" tabindex="-1" aria-label="Show/Hide Confirm Password">
+                  <span [ngClass]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div *ngIf="passwordMismatch && confirmPasswordRef.touched" class="text-danger small mt-1">Passwords do not match</div>
             </div>
           </div>
 

@@ -3,8 +3,9 @@
  
   <!-- User Bookings -->
   <div class="card mb-4">
-    <div class="card-header bg-info text-white">
-      My Bookings
+    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+      <span>My Bookings</span>
+      <button class="btn btn-danger btn-sm" (click)="deleteAllCancelledBookings()">Delete All Cancelled Bookings</button>
     </div>
     <div class="card-body table-responsive">
       <table class="table table-bordered table-striped table-hover text-center">
@@ -12,21 +13,20 @@
           <tr>
             <th>Name</th>
             <th>Vaccine</th>
-            <th>Date</th>
-            <th>Time</th>
+            <th>Date & Time</th>
             <th>Location</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let booking of userBookings; let i = index">
-            <td>{{ booking.name }}</td>
-            <td>{{ booking.vaccine }}</td>
-            <td>{{ booking.date }}</td>
-            <td>{{ booking.time }}</td>
-            <td>{{ booking.location }}</td>
+            <td>{{ userName }}</td>
+            <td>{{ booking.vaccineName }}</td>
+            <td>{{ booking.slotDate }} <span *ngIf="booking.slotTime">({{ booking.slotTime }})</span></td>
+            <td>{{ booking.city }}</td>
             <td>
-              <a href="#" class="text-danger" (click)="deleteUserBooking(i); $event.preventDefault()">Delete Booking</a>
+              <a *ngIf="booking.status === 'Booked'" href="#" class="text-danger" (click)="deleteUserBooking(i); $event.preventDefault()">Delete Booking</a>
+              <span *ngIf="booking.status !== 'Booked'" class="text-muted">Not Deletable</span>
             </td>
           </tr>
         </tbody>
@@ -45,21 +45,23 @@
           <tr>
             <th>Name</th>
             <th>Vaccine Name</th>
-            <th>Location City</th>
-            <th>Location State</th>
-            <th>Slot Date</th>
-            <th>Vaccination Center</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Center Name</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let booking of familyBookings; let i = index">
             <td>{{ booking.fullName }}</td>
-            <td>{{ booking.vaccineName }}</td>
-            <td>{{ booking.locationCity }}</td>
-            <td>{{ booking.locationState }}</td>
-            <td>{{ booking.slotDate | date:'medium' }}</td>
-            <td>{{ booking.vaccinationCenterName }}</td>
+            <td>{{ booking.vaccineName || '-' }}</td>
+            <td>{{ booking.city || '-' }}</td>
+            <td>{{ booking.locationState || '-' }}</td>
+            <td>{{ booking.slotDate ? (booking.slotDate | date:'mediumDate') : '-' }}</td>
+            <td>{{ booking.slotTime || '-' }}</td>
+            <td>{{ booking.centerName || booking.vaccinationCenterName || '-' }}</td>
             <td>
               <a href="#" class="text-danger" (click)="deleteFamilyBooking(i); $event.preventDefault()">Delete Booking</a>
             </td>

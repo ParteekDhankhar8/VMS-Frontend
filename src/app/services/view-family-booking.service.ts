@@ -8,25 +8,32 @@ export interface FamilyMember {
   age: number;
   gender: string;
   userId: number;
-  vaccineName: string;
-  date: string;
-  time: string;
-  location: string;
+  vaccineName: string | null;
+  centerName: string | null;
+  slotDate: string | null;
+  slotTime: string | null;
+  city: string | null;
+  locationState: string | null;
+  vaccinationCenterName: string | null;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViewFamilyBookingService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/FamilyMember/user';
+  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api';
 
   constructor(private http: HttpClient) {}
 
   getFamilyMembers(userId: number): Observable<FamilyMember[]> {
-    return this.http.get<FamilyMember[]>(`${this.apiUrl}/${userId}`);
+    return this.http.get<FamilyMember[]>(`${this.apiUrl}/FamilyMember/user/${userId}`);
   }
 
   deleteFamilyMember(memberId: number) {
-    return this.http.delete(`${this.apiUrl.replace('/user', '')}/${memberId}`, { responseType: 'text' });
+    return this.http.delete(`${this.apiUrl}/Booking/${memberId}`, { responseType: 'text' });
+  }
+
+  getViewBookings(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Booking/user/${userId}`);
   }
 }

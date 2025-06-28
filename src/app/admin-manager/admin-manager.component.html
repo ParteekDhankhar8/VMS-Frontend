@@ -9,13 +9,17 @@
         <th>ID</th>
         <th>Name</th>
         <th>Description</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let v of filteredVaccines">
+      <tr *ngFor="let v of filteredVaccines; let i = index">
         <td>{{ v.vaccineId }}</td>
         <td>{{ v.name }}</td>
         <td>{{ v.description }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="deleteVaccine(v.vaccineId, i)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>

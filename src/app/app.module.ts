@@ -78,6 +78,7 @@ import { MakingSlotsComponent } from './making-slots/making-slots.component';
     MatCardModule,
     MatTableModule,
     BrowserModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

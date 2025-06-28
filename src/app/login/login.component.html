@@ -22,11 +22,21 @@
         
         <div class="form-group mb-3">
           <label class="form-label fw-medium">Password</label>
-          <input type="password" class="form-control custom-input" [(ngModel)]="loginPassword" name="loginPassword" required minlength="6" #passwordRef="ngModel" />
-          <div *ngIf="passwordRef.invalid && passwordRef.touched" class="invalid-feedback d-block">
-            <small *ngIf="passwordRef.errors?.['required']">Password is required</small>
-            <small *ngIf="passwordRef.errors?.['minlength']">Minimum 6 characters</small>
+          <div class="input-group">
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control custom-input" [(ngModel)]="loginPassword" name="loginPassword" required #passwordRef="ngModel" />
+            <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword" tabindex="-1" aria-label="Show/Hide Password">
+              <span [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"></span>
+            </button>
           </div>
+          <div *ngIf="passwordRef.touched && !loginPassword" class="invalid-feedback d-block">
+            <small>Password is required</small>
+          </div>
+          <!-- <div *ngIf="passwordRef.touched && loginPassword && passwordRef.invalid && loginPassword !== registrationPassword" class="invalid-feedback d-block">
+            <small *ngIf="passwordRef.errors?.['minlength']">Minimum 8 characters</small>
+            <small *ngIf="passwordRef.errors?.['pattern']">
+              Password must contain at least 1 letter, 1 number, and 1 special character
+            </small>
+          </div> -->
         </div>
 
        

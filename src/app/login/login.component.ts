@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
   loginRole: 'User' | 'Admin' = 'User';  // Default to 'user'
   loginEmail: string = '';
   loginPassword: string = '';
+  registrationPassword: string = ''; // Set this value appropriately
+  showPassword: boolean = false;
   loginMessage: string = '';
   loginMessageColor: 'success' | 'danger' = 'success';
  
@@ -58,13 +60,13 @@ export class LoginComponent implements OnInit {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     this.captchaCode = Array.from({ length: 6 }, () =>
       chars[Math.floor(Math.random() * chars.length)]
-    ).join('');
+    ).join('').toUpperCase(); // Ensure always uppercase
     this.userCaptcha = '';
     this.captchaStatus = '';
   }
- 
+  
   verifyCaptcha(): void {
-    this.captchaStatus = (this.userCaptcha.toUpperCase() === this.captchaCode)
+    this.captchaStatus = (this.userCaptcha === this.captchaCode)
       ? 'valid'
       : 'invalid';
   }
@@ -125,5 +127,13 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+
+  get showPasswordConstraints(): boolean {
+    // Show constraints if password is entered, touched, invalid, and does NOT match registration password
+    return (
+      !!this.loginPassword &&
+      this.loginPassword !== this.registrationPassword &&
+      this.loginPassword.length > 0
+    );
+  }
 }
- 
