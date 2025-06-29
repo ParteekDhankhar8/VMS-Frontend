@@ -9,6 +9,8 @@ import { ViewFamilyBookingService, FamilyMember } from '../services/view-family-
 export class VaccinehistoryComponent implements OnInit {
 
 vaccinationData: any[] = [];
+userBookings: any[] = [];
+familyBookings: any[] = [];
 currentIndex = 0;
 currentUser: any = localStorage.getItem('currentUser');
 userId: number = this.currentUser ? JSON.parse(this.currentUser).userId : 30;
@@ -16,51 +18,32 @@ userId: number = this.currentUser ? JSON.parse(this.currentUser).userId : 30;
 constructor(private viewFamilyBookingService: ViewFamilyBookingService) {}
 
 ngOnInit() {
-  this.getUserBookings();
-  this.getFamilyBookings();
+  this.getUserAndFamilyBookings();
 }
 
-getUserBookings() {
-  this.viewFamilyBookingService.getViewBookings(this.userId).subscribe({
-    next: (data: any[]) => {
-      if (data && data.length > 0) {
-        // Map user bookings to vaccinationData format
-        const mapped = data.map(b => ({
-          uname: b.fullName || b.uname || 'User',
-          name: b.vaccineName || b.name,
-          date: b.date || b.slotDate,
-          status: b.status || 'Not Taken',
-          certificate: 'download certificate'
+getUserAndFamilyBookings() {
+    const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
+    this.viewFamilyBookingService.getViewBookings(userId).subscribe({
+      next: (data: any[]) => {
+        this.userBookings = data.filter(booking => booking.memberName == null).map(booking => ({
+          ...booking,
+          uname: booking.uname || booking.name || this.currentUser ? JSON.parse(this.currentUser).name : 'User'
         }));
-        this.vaccinationData = [...this.vaccinationData, ...mapped];
-      }
-    },
-    error: () => {
-      // Optionally handle error
-    }
-  });
-}
-
-getFamilyBookings() {
-  this.viewFamilyBookingService.getFamilyMembers(this.userId).subscribe({
-    next: (data: FamilyMember[]) => {
-      if (data && data.length > 0) {
-        // Map family bookings to vaccinationData format
-        const mapped = data.map(f => ({
-          uname: f.fullName,
-          // name: f.vaccineName,
-          // date: f.slotDate,
-          // status: f.status || 'Not Taken',
-          certificate: 'download certificate'
+        this.familyBookings = data.filter(booking => booking.memberName && booking.memberName !== null).map(booking => ({
+          ...booking,
+          uname: booking.memberName
         }));
-        this.vaccinationData = [...this.vaccinationData, ...mapped];
+        // Combine user and family bookings for display
+        this.vaccinationData = [...this.userBookings, ...this.familyBookings];
+        console.log('User Bookings:', this.userBookings);
+        console.log('Family Bookings:', this.familyBookings);
+        console.log('Vaccination Data:', this.vaccinationData);
+      },
+      error: () => {
+        alert('Failed to fetch bookings.');
       }
-    },
-    error: () => {
-      // Optionally handle error
-    }
-  });
-}
+    });
+  }
 
 nextPage() {
   if (this.currentIndex + 5 < this.vaccinationData.length) {

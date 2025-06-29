@@ -17,41 +17,33 @@ import { CertificateComponent } from './certificate/certificate.component';
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 // import { RescheduleviewComponent } from './rescheduleview/rescheduleview.component';
 import { MakingSlotsComponent } from './making-slots/making-slots.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { ProductsComponent } from './products/products.component'; // Import the ProductsComponent
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
   { path: '', component: PageComponent },
   { path: 'login', component: LoginComponent },
-  {path :'signup' , component: SignupComponent},
+  { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'register', component: SignupComponent },
-  
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'navbar', component: NavbarComponent },
-  { path: 'sidebar', component: SidebarComponent },
-  { path: 'vaccinehistory', component: VaccinehistoryComponent },
-  { path: 'booking', component: BookingComponent },
-      { path: 'family-booking', component: FamilyBookingComponent },
-      // { path: 'view-schedule', component: RescheduleviewComponent },
-      { path: 'user-profile', component: UserProfileComponent },
-      { path: 'view-booking', component: ViewBookingComponent },
-      {path: 'user-dashboard', component: UserComponent },
-
-  
-  
-  {path:'certificate',component:CertificateComponent},
-  {path:'admin-dashboard',component: AdmindashboardComponent},
-  
-  { path:'making-slots',component: MakingSlotsComponent},
-
-
-
-
-
-
-
-
-
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'products', component: ProductsComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'navbar', component: NavbarComponent, canActivate: [AuthGuard] },
+  { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuard] },
+  { path: 'vaccinehistory', component: VaccinehistoryComponent, canActivate: [AuthGuard] },
+  { path: 'booking', component: BookingComponent, canActivate: [AuthGuard] },
+  { path: 'family-booking', component: FamilyBookingComponent, canActivate: [AuthGuard] },
+  { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'view-booking', component: ViewBookingComponent, canActivate: [AuthGuard] },
+  { path: 'user-dashboard', component: UserComponent, canActivate: [AuthGuard] },
+  { path: 'certificate', component: CertificateComponent, canActivate: [AuthGuard] },
+  { path: 'admin-dashboard', component: AdmindashboardComponent, canActivate: [AuthGuard] },
+  { path: 'making-slots', component: MakingSlotsComponent, canActivate: [AuthGuard] },
   // Wildcard route for unknown paths
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

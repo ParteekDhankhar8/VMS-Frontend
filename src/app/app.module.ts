@@ -35,6 +35,9 @@ import { UsersidebarComponent } from './usersidebar/usersidebar.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { MakingSlotsComponent } from './making-slots/making-slots.component';
 import { RegisterComponentComponent } from './register-component/register-component.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { ProductsComponent } from './products/products.component';
 
 
 @NgModule({
@@ -60,10 +63,12 @@ import { RegisterComponentComponent } from './register-component/register-compon
     AddslotComponent,
     AddvaccineComponent,
     UsersidebarComponent,
-    // RescheduleviewComponent,
     AdminhomeComponent,
     MakingSlotsComponent,
     RegisterComponentComponent,
+    AboutComponent,
+    ContactComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

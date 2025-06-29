@@ -59,11 +59,11 @@
           <tbody>
             <tr *ngFor="let booking of familyBookings; let i = index">
               <td>{{ booking.memberName || booking.fullName }}</td>
-              <td>{{ booking.vaccineName }}</td>
-              <td>{{ booking.slotDate | date:'medium' }}</td>
-              <td>{{ booking.vaccinationCenterName }}</td>
-              <td>{{ booking.locationState }}</td>
-              <td>{{ booking.locationCity }}</td>
+              <td>{{ booking.vaccineName || booking.vaccine || booking.vaccine_type }}</td>
+              <td>{{ booking.slotDate || booking.date | date:'medium' }}</td>
+              <td>{{ booking.vaccinationCenterName || booking.centerName }}</td>
+              <td>{{ booking.locationState || booking.state }}</td>
+              <td>{{ booking.locationCity || booking.city }}</td>
               <td>
                 <div class="d-flex flex-wrap gap-1 justify-content-center">
                   <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteFamilyBooking(i)">Delete</button>

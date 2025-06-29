@@ -17,8 +17,9 @@ export class AuthService {
     this.loggedIn = false;
     this.role = null;
     localStorage.removeItem('authRole');
-
-    alert('You have been logged out successfully.');    
+    alert('You have been logged out successfully.');
+    // Redirect to login and prevent back navigation
+    // window.location.replace('');
   }
   isAuthenticated(): boolean {
     return this.loggedIn || !!localStorage.getItem('authRole');

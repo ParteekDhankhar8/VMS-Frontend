@@ -58,6 +58,16 @@ export class UsertableComponent {
     });
   }
 
+  // Add this method to store bookingId and details in localStorage for certificate
+  storeBookingForCertificate(booking: any) {
+    localStorage.setItem('currentBooking', JSON.stringify({
+      bookingId: booking.bookingId,
+      bookedFor: booking.bookedFor,
+      vaccine: booking.vaccine
+    }));
+    alert('Booking details saved for certificate!');
+  }
+
   get filteredBookings() {
     if (!this.searchText) return this.bookings;
     const search = this.searchText.toLowerCase();

@@ -39,4 +39,12 @@ export class CertificateService {
     allBookings.push(booking);
     localStorage.setItem('allBookings', JSON.stringify(allBookings));
   }
+
+  getCertificateDataForMember(memberId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/person/${memberId}`);
+  }
+
+  getCertificateData(certificateId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${certificateId}`);
+  }
 }

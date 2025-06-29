@@ -99,7 +99,9 @@ export class LoginComponent implements OnInit {
           this.loginMessageColor = 'success';
           alert('Admin login successful');
           localStorage.setItem("currentUser",JSON.stringify(res));
-          this.router.navigate(['/admin-dashboard']); // Reload to ensure admin dashboard is fresh// Force reload to ensure admin dashboard is fresh
+          this.router.navigate(['/admin-dashboard']).then(() => {
+            window.location.reload();
+          });
         },
         error: (err) => {
           console.error('Login Error:', err);
@@ -116,7 +118,9 @@ export class LoginComponent implements OnInit {
           this.loginMessageColor = 'success';
           alert('User login successful');
           localStorage.setItem("currentUser",JSON.stringify(res));
-          this.router.navigate(['/user-dashboard']);
+          this.router.navigate(['/user-dashboard']).then(() => {
+            window.location.reload();
+          });
         },
         error: (err) => {
           console.error('Login Error:', err);

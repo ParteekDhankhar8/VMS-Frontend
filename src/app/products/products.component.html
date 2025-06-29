@@ -1,0 +1,16 @@
+<div class="container py-5">
+  <h1 class="text-center mb-4">Our Vaccines</h1>
+  <div class="row g-4">
+    <div class="col-md-4 col-sm-6" *ngFor="let vaccine of vaccines">
+      <div class="card h-100 shadow-sm">
+        <a [href]="vaccine.link || '#'" target="_blank" rel="noopener">
+          <img [src]="vaccine.image" class="card-img-top" [alt]="vaccine.name">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{ vaccine.name }}</h5>
+          <p class="card-text">{{ vaccine.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

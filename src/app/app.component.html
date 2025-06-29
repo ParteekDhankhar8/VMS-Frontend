@@ -5,48 +5,61 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mx-auto"> <!-- Center the nav items -->
       <li class="nav-item mx-2">
         <a class="nav-link custom-nav" [routerLink]="['/page']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
       </li>
       <li class="nav-item mx-2">
-        <a class="nav-link custom-nav" [routerLink]="['/about']" routerLinkActive="active">About</a>
+        <a class="nav-link custom-nav d-flex align-items-center gap-1" [routerLink]="['/about']" routerLinkActive="active">
+          <span class="bi bi-info-circle"></span> About
+        </a>
       </li>
       <li class="nav-item mx-2">
-        <a class="nav-link custom-nav" [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
+        <a class="nav-link custom-nav d-flex align-items-center gap-1" [routerLink]="['/contact']" routerLinkActive="active">
+          <span class="bi bi-envelope"></span> Contact
+        </a>
       </li>
-
-      <!-- Auth buttons -->
-     <ng-container *ngIf="isLoggedIn(); else guestLinks">
-  <ng-template #logoutBlock>
-    <li class="nav-item">
-      <button class="btn btn-light ms-2" (click)="logout()">Logout</button>
-    </li>
-  </ng-template>
-  <ng-container *ngTemplateOutlet="logoutBlock"></ng-container>
-</ng-container>
-
-<ng-template #guestLinks>
-  <ng-container>
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle btn btn-outline-light ms-2" href="#" role="button"
-         data-bs-toggle="dropdown" aria-expanded="false">User</a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li>
-          <a class="dropdown-item" [routerLink]="['/login']" [queryParams]="{ role: 'User' }">Login</a>
-        </li>
-        <li>
-          <a class="dropdown-item" [routerLink]="['/register']" [queryParams]="{ role: 'User' }">Register</a>
-        </li>
-      </ul>
-    </li>
-    <li class="nav-item">
-      <a class="btn btn-outline-light ms-2" [routerLink]="['/login']" [queryParams]="{ role: 'Admin' }">Admin</a>
-    </li>
-  </ng-container>
-</ng-template>
-
+    </ul>
+    <ul class="navbar-nav ms-auto"> <!-- Right-aligned auth buttons -->
+      <!-- Auth buttons and dropdowns here (move from previous location) -->
+      <ng-container *ngIf="isLoggedIn(); else guestLinks">
+        <ng-template #logoutBlock>
+          <li class="nav-item">
+            <button class="btn btn-light ms-2 d-flex align-items-center gap-1" (click)="logout()">
+              <span class="bi bi-box-arrow-right"></span> Logout
+            </button>
+          </li>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="logoutBlock"></ng-container>
+      </ng-container>
+      <ng-template #guestLinks>
+        <ng-container>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle btn btn-outline-light ms-2 d-flex align-items-center gap-1" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="bi bi-person-circle"></span> User
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-1" [routerLink]="['/login']" [queryParams]="{ role: 'User' }">
+                  <span class="bi bi-box-arrow-in-right"></span> Login
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-1" [routerLink]="['/register']" [queryParams]="{ role: 'User' }">
+                  <span class="bi bi-person-plus"></span> Register
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light ms-2 d-flex align-items-center gap-1" [routerLink]="['/login']" [queryParams]="{ role: 'Admin' }">
+              <span class="bi bi-shield-lock"></span> Admin
+            </a>
+          </li>
+        </ng-container>
+      </ng-template>
     </ul>
   </div>
 </nav>

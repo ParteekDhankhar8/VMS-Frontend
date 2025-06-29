@@ -1,31 +1,35 @@
 <div #printSection id="printSection" style="display: none;">
   <div class="certificate">
-    <h1>Government of Health Services</h1>
-    <h2>Vaccination Certificate</h2>
-    <hr />
- 
-    <div class="certificate-body">
-      <p><strong>Certificate Number:</strong> VC-{{ user.id }}</p>
-      <p><strong>Full Name:</strong> {{ user.name }}</p>
-      <p><strong>Vaccine Name:</strong> {{ user.vaccineName }}</p>
-      <!-- <p><strong>Dose:</strong> {{ user.dose }} of {{ user.totalDoses }}</p> -->
-      <p><strong>Date of Vaccination:</strong> {{ user.vaccinationDate }}</p>
-      <p><strong>Issued By:</strong> Ministry of Public Health</p>
+    <div class="container py-5 d-flex justify-content-center align-items-center min-vh-100">
+      <div class="card shadow-lg p-4 w-100" style="max-width: 500px;">
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <h1 class="h3 mb-2">Government of Health Services</h1>
+            <h2 class="h5 text-primary mb-3">Vaccination Certificate</h2>
+            <hr />
+          </div>
+          <div class="mb-3">
+            <p><strong>Certificate Number:</strong> VC-{{ user.id }}</p>
+            <p><strong>Full Name:</strong> {{ user.name }}</p>
+            <p><strong>Vaccine Name:</strong> {{ user.vaccineName }}</p>
+            <!-- <p><strong>Dose:</strong> {{ user.dose }} of {{ user.totalDoses }}</p> -->
+            <p><strong>Date of Vaccination:</strong> {{ user.vaccinationDate }}</p>
+            <p><strong>Issued By:</strong> Ministry of Public Health</p>
+          </div>
+          <div class="d-flex justify-content-between align-items-end mt-4">
+            <div class="text-start">
+              <p class="mb-0">Dr. ABC</p>
+              <p class="mb-0"><strong>(UMH)</strong></p>
+            </div>
+            <div class="text-end">
+              <p class="mb-0">Date: {{ user.issuedDate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn btn-primary px-4" (click)="printCertificate()">Download PDF</button>
+        </div>
+      </div>
     </div>
- 
-    <div class="footer">
-  <div class="signature">
-    <p style="margin:0;">J.P. Nadda</p>
-    <p style="margin:0;"><strong>(UMH)</strong></p>
   </div>
-  <div class="date">
-    <p>Date: {{ user.issuedDate }}</p>
-  </div>
-</div>
- 
-  </div>
-</div>
- 
-<div class="text-center">
-  <button class="btn btn-primary mt-3" (click)="printCertificate()">Print / Save PDF</button>
 </div>

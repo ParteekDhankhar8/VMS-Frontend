@@ -22,7 +22,7 @@ interface SlotApiResponse {
 export class ViewBookingComponent implements OnInit {
   userBookings: any[] = [];
   familyBookings: any[] = [];
-  userId: number = 1; // Replace with actual userId from auth context if available
+  userId: number = 4; // Replace with actual userId from auth context if available
   slots: SlotApiResponse[] = [];
   currentUser: any = localStorage.getItem('currentUser');
   userName: number = this.currentUser ? JSON.parse(this.currentUser).fullName : this.userId;
@@ -67,7 +67,28 @@ export class ViewBookingComponent implements OnInit {
     this.viewFamilyBookingService.getViewBookings(userId).subscribe({
       next: (data: any[]) => {
         this.userBookings = data.filter(booking => booking.memberName == null);
-        this.familyBookings = data.filter(booking => booking.memberName && booking.memberName !== null);
+        // For each family booking, fetch full details from backend
+        const familyBookingsRaw = data.filter(booking => booking.memberName && booking.memberName !== null);
+        if (familyBookingsRaw.length > 0) {
+          this.familyBookings = [];
+          familyBookingsRaw.forEach(fb => {
+            this.viewFamilyBookingService.getFamilyMembers(userId).subscribe({
+              next: (members) => {
+                const member = members.find(m => m.memberId === fb.memberId);
+                if (member) {
+                  this.familyBookings.push({ ...fb, ...member });
+                } else {
+                  this.familyBookings.push(fb);
+                }
+              },
+              error: () => {
+                this.familyBookings.push(fb);
+              }
+            });
+          });
+        } else {
+          this.familyBookings = [];
+        }
         console.log('User Bookings:', this.userBookings);
         console.log('Family Bookings:', this.familyBookings);
       },
