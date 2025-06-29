@@ -5,18 +5,17 @@ body, html {
   background-color: #f5f7fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
- .book-wrapper {
+ 
+ .fambook-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 86vh;
   padding: 20px;
 }
-
-.container {
- width: 100%;
+ .container {
+ 
+  width: 100%;
   margin-bottom: 120px;
   max-width: 700px;
   background: #ffffff;
@@ -27,9 +26,6 @@ body, html {
   text-align: center;
 }
  
-
- 
-
 h2 {
   text-align: center;
   margin-bottom: 40px;
@@ -37,7 +33,7 @@ h2 {
   font-weight: bold;
 }
  
-
+ 
 .form-group-inline {
   display: flex;
   align-items: center;
@@ -52,16 +48,8 @@ h2 {
   margin-bottom: 0;
 }
  
-.form-group-inline .form-control {
-  flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  height: auto;
-}
- 
 
+ 
 select option[disabled] {
   color: #aaa;
 }
@@ -88,7 +76,6 @@ select option[disabled] {
   cursor: not-allowed;
 }
  
-
 @media (max-width: 992px) {
   .container {
     padding: 24px 10px;
@@ -103,9 +90,8 @@ select option[disabled] {
     padding: 10px;
   }
 }
-
 @media (max-width: 768px) {
-  .book-wrapper {
+  .fambook-wrapper {
     padding: 8px;
   }
   .container {
@@ -139,7 +125,6 @@ select option[disabled] {
     margin-top: 18px;
   }
 }
-
 @media (max-width: 576px) {
   .container {
     padding: 6px 0;

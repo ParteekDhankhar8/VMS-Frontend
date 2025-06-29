@@ -34,6 +34,7 @@ export class FamilyBookingComponent implements OnInit {
   selectedMember: string = '';
   selectedDate: string = '';
   age: number = 0;
+  currentMember: any = localStorage.getItem('memberId');
   gender: string = '';
   userId: number = 1;
   familyMembers: string[] = ['Father', 'Mother','Spouse','Other'];
@@ -128,8 +129,9 @@ export class FamilyBookingComponent implements OnInit {
       alert('Please fill all details before booking.');
     } else {
       const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
+      const memberId = this.currentMember ? JSON.parse(this.currentMember) : null;
       const familyMember: FamilyMemberData = {
-        memberId: 0, // Let backend assign or set as needed
+        memberId: memberId,
         fullName: this.recipientName,
         age: this.age,
         gender: this.gender,
@@ -138,13 +140,25 @@ export class FamilyBookingComponent implements OnInit {
         state: this.selectedState,
         city: this.selectedCity,
         vaccinationCenterName: this.selectedVaccinationCenter,
-        slotDate: this.selectedDate
+        slotDateTime: this.selectedDate
 
       };
       this.familyBookingService.addFamilyMember(familyMember).subscribe({
         next: (response: any) => {
           alert(`✅ Family member added and appointment booked for ${this.recipientName} (${this.selectedMember}) for ${this.selectedVaccine} in ${this.selectedCity}, ${this.selectedState} on ${this.selectedDate}`);
-          this.router.navigate(['/view-booking']);
+          this.slots = [] as SlotApiResponse[];
+  this.recipientName  = '';
+  this.selectedVaccine = '';
+  this.selectedState = '';
+  this.selectedCity = '';
+  this.selectedMember = '';
+  this.selectedDate = '';
+  this.age = 0;
+  this.gender = '';
+  this.userId = 1;
+  this.familyMembers = ['Father', 'Mother','Spouse','Other'];
+  this.minDate = '';
+  this.selectedVaccinationCenter = '';
         },
         error: (err: any) => {
           alert('❌ Failed to add family member. Please try again.');

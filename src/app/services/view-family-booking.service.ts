@@ -26,7 +26,7 @@ export class ViewFamilyBookingService {
   constructor(private http: HttpClient) {}
 
   getFamilyMembers(userId: number): Observable<FamilyMember[]> {
-    return this.http.get<FamilyMember[]>(`${this.apiUrl}/FamilyMember/user/${userId}`);
+    return this.http.get<FamilyMember[]>(`${this.apiUrl}/Booking/user/${userId}`);
   }
 
   deleteFamilyMember(memberId: number) {

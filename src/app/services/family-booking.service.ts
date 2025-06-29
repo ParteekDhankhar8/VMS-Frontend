@@ -12,14 +12,14 @@ export interface FamilyMemberData {
   state: string;
   city: string;
   vaccinationCenterName: string;
-  slotDate: string;
+  slotDateTime: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class FamilyBookingService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/FamilyMember';
+  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Booking/book';
 
   constructor(private http: HttpClient) {}
 

@@ -63,6 +63,10 @@
         <a href="booking" class="nav-link" [class.active]="selectedTab === 'booking'"
            (click)="selectTab('booking'); $event.preventDefault()">Book Appointment</a>
       </li>
+       <li class="nav-item">
+        <a href="register-family" class="nav-link" [class.active]="selectedTab === 'register-family'"
+           (click)="selectTab('register-family'); $event.preventDefault()">Add Family Members</a>
+      </li>
       <li class="nav-item">
         <a href="family-booking" class="nav-link" [class.active]="selectedTab === 'family-booking'"
            (click)="selectTab('family-booking'); $event.preventDefault()">Book for Family</a>
@@ -71,10 +75,10 @@
         <a href="view-booking" class="nav-link" [class.active]="selectedTab === 'view-booking'"
            (click)="selectTab('view-booking'); $event.preventDefault()">View Booking</a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a href="view-schedule" class="nav-link" [class.active]="selectedTab === 'view-schedule'"
            (click)="selectTab('view-schedule'); $event.preventDefault()">Reschedule Booking</a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a href="user-profile" class="nav-link" [class.active]="selectedTab === 'user-profile'"
            (click)="selectTab('user-profile'); $event.preventDefault()">User Profile</a>
@@ -103,15 +107,18 @@
       <app-family-booking></app-family-booking>
     </section>
 
-    <section *ngIf="selectedTab === 'view-schedule'">
+    <!-- <section *ngIf="selectedTab === 'view-schedule'">
       <app-rescheduleview></app-rescheduleview>
-    </section>
+    </section> -->
      <section *ngIf="selectedTab === 'view-booking'">
      <app-view-booking></app-view-booking>
     </section>
      <section *ngIf="selectedTab === 'user-profile'">
        <app-user-profile></app-user-profile>
     </section>
-    
+       <section *ngIf="selectedTab === 'register-family'">
+       <app-register-component></app-register-component>
+    </section>
+
   </main>
 </div>

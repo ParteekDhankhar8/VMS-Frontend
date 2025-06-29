@@ -4,20 +4,25 @@
     <thead class="table-light">
       <tr>
         <th>Name</th>
-        <th>Vaccine Name</th>
-        <th>Date </th>
+        <!-- <th>Vaccine Name</th>
+        <th>Date </th> -->
         <th>Status</th>
         <th>Download certificate</th>
- 
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let vaccine of vaccinationData | slice:currentIndex:currentIndex+5">
+      <tr *ngFor="let vaccine of vaccinationData | slice:currentIndex:currentIndex+5; let i = index">
         <td>{{ vaccine.uname }}</td>
-        <td>{{ vaccine.name }}</td>
-        <td>{{ vaccine.date }}</td>
-        <td>{{ vaccine.status }}</td>
-        <td><app-certificate></app-certificate> </td>
+        <!-- <td>{{ vaccine.name }}</td>
+        <td>{{ vaccine.date }}</td> -->
+        <td>
+          <input type="checkbox" [checked]="vaccine.status === 'Taken'" (change)="toggleStatus(vaccine)" />
+          <span>{{ vaccine.status === 'Taken' ? 'Taken' : 'Not Taken' }}</span>
+        </td>
+        <td>
+          <app-certificate *ngIf="vaccine.status === 'Taken'" ></app-certificate>
+          <button *ngIf="vaccine.status !== 'Taken'" class="btn btn-secondary" disabled>Download Disabled</button>
+        </td>
       </tr>
     </tbody>
   </table>

@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit {
   }
 
   get showPasswordConstraints(): boolean {
-    // Show constraints if password is entered, touched, invalid, and does NOT match registration password
+   
     return (
       !!this.loginPassword &&
       this.loginPassword !== this.registrationPassword &&

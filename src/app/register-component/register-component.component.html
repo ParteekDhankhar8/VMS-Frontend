@@ -1,0 +1,36 @@
+<div class="register-family-wrapper">
+  <div class="container mt-4">
+    <h2 class="mb-4 text-center text-primary">Register Family Member</h2>
+    <form (ngSubmit)="registerMember()">
+      <div class="form-group-inline mb-3">
+        <label for="fullName">Full Name:</label>
+        <input type="text" class="form-control" id="fullName" [(ngModel)]="fullName" name="fullName" required />
+      </div>
+      <div class="form-group-inline mb-3">
+        <label for="age">Age:</label>
+        <input type="number" class="form-control" id="age" [(ngModel)]="age" name="age" required />
+      </div>
+      <div class="form-group-inline mb-3">
+        <label for="gender">Gender:</label>
+        <select class="form-control" id="gender" [(ngModel)]="gender" name="gender" required>
+          <option value="">-- Select Gender --</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group-inline mb-3">
+        <label for="relation">Relation:</label>
+        <select class="form-control" id="relation" [(ngModel)]="relation" name="relation" required>
+          <option value="">-- Select Relation --</option>
+          <option value="Father">Father</option>
+          <option value="Mother">Mother</option>
+          <option value="Spouse">Spouse</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      
+      <button class="btn btn-primary mt-3 w-100" type="submit">Register Member</button>
+    </form>
+  </div>
+</div>

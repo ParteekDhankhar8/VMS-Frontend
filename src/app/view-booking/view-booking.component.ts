@@ -1,7 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import{ ViewFamilyBookingService, FamilyMember } from '../services/view-family-booking.service';
+import { ViewFamilyBookingService, FamilyMember } from '../services/view-family-booking.service';
 import { HttpClient } from '@angular/common/http';
-import { BookingApiService } from '../services/booking-api.service';
+import { BookingDeleteService } from '../services/booking-delete.service';
+
+interface SlotApiResponse {
+  slotId: number;
+  vaccineName: string;
+  locationCity: string;
+  locationState: string;
+  locationCountry: string;
+  slotDate: string;
+  availableCount: number;
+  vaccinationCenterName: string;
+}
 
 @Component({
   selector: 'app-view-booking',
@@ -10,64 +21,96 @@ import { BookingApiService } from '../services/booking-api.service';
 })
 export class ViewBookingComponent implements OnInit {
   userBookings: any[] = [];
-  familyBookings: FamilyMember[] = [];
-  userId: number = 4; // Replace with actual userId from auth context if available
+  familyBookings: any[] = [];
+  userId: number = 1; // Replace with actual userId from auth context if available
+  slots: SlotApiResponse[] = [];
   currentUser: any = localStorage.getItem('currentUser');
-  userName: any = this.currentUser ? JSON.parse(this.currentUser).fullName : 'User';
+  userName: number = this.currentUser ? JSON.parse(this.currentUser).fullName : this.userId;
+  // Reschedule modal state
+  showRescheduleModal = false;
+  selectedBooking: any = null;
+  selectedBookingType: 'user' | 'family' | null = null;
+  selectedBookingIndex: number | null = null;
+  selectedSlotId: number | null = null;
 
-  constructor(private viewFamilyBookingService: ViewFamilyBookingService, private http: HttpClient, private bookingApiService: BookingApiService) {}
+  constructor(
+    private viewFamilyBookingService: ViewFamilyBookingService,
+    private http: HttpClient,
+    private bookingDeleteService: BookingDeleteService
+  ) {}
 
   ngOnInit() {
-    this.getUserBookings();
-    this.getFamilyBookings();
+    this.fetchSlotsAndBookings();
+    this.getUserAndFamilyBookings();
   }
 
-  getUserBookings() {
+  fetchSlotsAndBookings() {
+    this.http.get('https://f1h42csw-5136.inc1.devtunnels.ms/api/Slot/available', { responseType: 'text' })
+      .subscribe({
+        next: (res: string) => {
+          try {
+            this.slots = JSON.parse(res);
+          } catch (e) {
+            this.slots = [];
+          }
+          this.getUserAndFamilyBookings();
+        },
+        error: () => {
+          this.slots = [];
+          this.getUserAndFamilyBookings();
+        }
+      });
+  }
+
+  getUserAndFamilyBookings() {
     const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
     this.viewFamilyBookingService.getViewBookings(userId).subscribe({
       next: (data: any[]) => {
-        console.log('User bookings data:', data);
-        // Only keep bookings with status 'Booked' for the current user
-        this.userBookings = (data && data.length > 0) ? data.filter(b => b.status === 'Booked') : [];
+        this.userBookings = data.filter(booking => booking.memberName == null);
+        this.familyBookings = data.filter(booking => booking.memberName && booking.memberName !== null);
+        console.log('User Bookings:', this.userBookings);
+        console.log('Family Bookings:', this.familyBookings);
       },
       error: () => {
-        alert('Failed to fetch user bookings.');
+        alert('Failed to fetch bookings.');
       }
     });
   }
 
-  getFamilyBookings() {
-    const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
-    this.viewFamilyBookingService.getFamilyMembers(userId).subscribe({
-      next: (data: FamilyMember[]) => {
-        console.log('Family bookings data:', data);
-        // No need to map slot details, API now returns all fields
-        this.familyBookings = data;
-      },
-      error: () => {
-        alert('Failed to fetch family bookings.');
-      }
-    });
-  }
+  // getFamilyBookings() {
+  //   const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
+  //   this.viewFamilyBookingService.getFamilyMembers(userId).subscribe({
+  //     next: (data: any[]) => {
+  //       // Map slot details into each family booking
+  //       this.familyBookings = data.map(fb => {
+  //         const slot = this.slots.find(s => s.slotId === fb.slotId);
+  //         return {
+  //           ...fb,
+  //           vaccineName: slot ? slot.vaccineName : '',
+  //           slotDate: slot ? slot.slotDate : '',
+  //           vaccinationCenterName: slot ? slot.vaccinationCenterName : '',
+  //           locationState: slot ? slot.locationState : '',
+  //           locationCity: slot ? slot.locationCity : ''
+  //         };
+  //       });
+  //     },
+  //     error: (err) => {
+  //       alert('Failed to fetch family bookings.');
+  //     }
+  //   });
+  // }
 
   deleteUserBooking(index: number) {
-    const booking = this.userBookings[index];
-    if (booking.status !== 'Booked') {
-      alert('Only active bookings can be deleted.');
-      return;
-    }
-    if (window.confirm('Are you sure you want to delete this booking?')) {
-      this.bookingApiService.deleteBooking(booking.bookingId).subscribe({
-        next: () => {
-          this.getUserBookings(); // Always re-fetch from backend after delete
-          alert('Booking deleted successfully.');
-        },
-        error: (err) => {
-          alert('Failed to delete booking.');
-          console.error('Delete booking error:', err);
-        }
-      });
-    }
+    const bookingId = this.userBookings[index].bookingId;
+    this.bookingDeleteService.deleteBooking(bookingId).subscribe({
+      next: () => {
+        this.userBookings.splice(index, 1);
+        alert('Booking cancelled and slot restored.');
+      },
+      error: () => {
+        alert('Failed to delete booking.');
+      }
+    });
   }
 
   deleteFamilyBooking(index: number) {
@@ -84,29 +127,54 @@ export class ViewBookingComponent implements OnInit {
     });
   }
 
-  deleteAllCancelledBookings() {
-    const cancelledBookings = this.userBookings.filter(b => b.status === 'Cancelled');
-    if (cancelledBookings.length === 0) {
-      alert('No cancelled bookings to delete.');
-      return;
+  openRescheduleModal(booking: any, type: 'user' | 'family', index: number) {
+    this.selectedBooking = booking;
+    this.selectedBookingType = type;
+    this.selectedBookingIndex = index;
+    this.selectedSlotId = null;
+    this.showRescheduleModal = true;
+  }
+
+  closeRescheduleModal() {
+    this.showRescheduleModal = false;
+    this.selectedBooking = null;
+    this.selectedBookingType = null;
+    this.selectedBookingIndex = null;
+    this.selectedSlotId = null;
+  }
+
+  submitReschedule() {
+    if (!this.selectedSlotId || this.selectedBookingIndex === null || !this.selectedBookingType) return;
+
+    if (this.selectedBookingType === 'user') {
+      // For demo: just update the slot in the local array
+      const slot = this.slots.find(s => s.slotId == this.selectedSlotId);
+      if (slot) {
+        this.userBookings[this.selectedBookingIndex] = {
+          ...this.userBookings[this.selectedBookingIndex],
+          vaccine: slot.vaccineName,
+          date: slot.slotDate,
+          location: slot.locationCity
+        };
+      }
+      this.closeRescheduleModal();
+      alert('User booking rescheduled!');
+    } else if (this.selectedBookingType === 'family') {
+      // For demo: update slot in local array, in real app call backend API
+      const slot = this.slots.find(s => s.slotId == this.selectedSlotId);
+      if (slot) {
+        this.familyBookings[this.selectedBookingIndex] = {
+          ...this.familyBookings[this.selectedBookingIndex],
+          slotId: slot.slotId,
+          vaccineName: slot.vaccineName,
+          slotDate: slot.slotDate,
+          vaccinationCenterName: slot.vaccinationCenterName,
+          locationState: slot.locationState,
+          locationCity: slot.locationCity
+        };
+      }
+      this.closeRescheduleModal();
+      alert('Family booking rescheduled!');
     }
-    if (!window.confirm(`Are you sure you want to delete all ${cancelledBookings.length} cancelled bookings?`)) {
-      return;
-    }
-    let deletedCount = 0;
-    cancelledBookings.forEach(booking => {
-      this.bookingApiService.deleteBooking(booking.bookingId).subscribe({
-        next: () => {
-          deletedCount++;
-          if (deletedCount === cancelledBookings.length) {
-            this.getUserBookings(); // Refresh after all deletes
-            alert('All cancelled bookings deleted successfully.');
-          }
-        },
-        error: (err) => {
-          console.error('Failed to delete cancelled booking:', booking.bookingId, err);
-        }
-      });
-    });
   }
 }
