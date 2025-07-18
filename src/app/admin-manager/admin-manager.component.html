@@ -15,10 +15,31 @@
     <tbody>
       <tr *ngFor="let v of filteredVaccines; let i = index">
         <td>{{ v.vaccineId }}</td>
-        <td>{{ v.name }}</td>
-        <td>{{ v.description }}</td>
         <td>
-          <button class="btn btn-danger btn-sm" (click)="deleteVaccine(v.vaccineId, i)">Delete</button>
+          <ng-container *ngIf="editIndex === i; else showName">
+            <input [(ngModel)]="editName" class="form-control" style="width: 120px; display: inline-block;" />
+          </ng-container>
+          <ng-template #showName>
+            {{ v.name }}
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="editIndex === i; else showDesc">
+            <input [(ngModel)]="editDescription" class="form-control" style="width: 180px; display: inline-block;" />
+          </ng-container>
+          <ng-template #showDesc>
+            {{ v.description }}
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="editIndex === i; else showActions">
+            <button class="btn btn-success btn-sm ml-1" (click)="saveVaccine(v)">Save</button>
+            <button class="btn btn-secondary btn-sm ml-1" (click)="cancelEdit()">Cancel</button>
+          </ng-container>
+          <ng-template #showActions>
+            <button class="btn btn-primary btn-sm ml-2" (click)="editVaccine(v, i)">Edit</button>
+            <button class="btn btn-danger btn-sm ml-2" (click)="deleteVaccine(v.vaccineId, i)">Delete</button>
+          </ng-template>
         </td>
       </tr>
     </tbody>

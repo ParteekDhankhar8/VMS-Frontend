@@ -45,7 +45,7 @@ export class ViewBookingComponent implements OnInit {
   }
 
   fetchSlotsAndBookings() {
-    this.http.get('https://f1h42csw-5136.inc1.devtunnels.ms/api/Slot/available', { responseType: 'text' })
+    this.http.get('http://localhost:5001/api/Slot/available', { responseType: 'text' })
       .subscribe({
         next: (res: string) => {
           try {
@@ -66,7 +66,17 @@ export class ViewBookingComponent implements OnInit {
     const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
     this.viewFamilyBookingService.getViewBookings(userId).subscribe({
       next: (data: any[]) => {
-        this.userBookings = data.filter(booking => booking.memberName == null);
+        this.userBookings = data.filter(booking => booking.memberName == null).map(booking => {
+          // Try to get locationState from slot if missing
+          if (!booking.locationState) {
+            const slot = this.slots.find(s => s.slotId === booking.slotId);
+            return {
+              ...booking,
+              locationState: slot ? slot.locationState : ''
+            };
+          }
+          return booking;
+        });
         // For each family booking, fetch full details from backend
         const familyBookingsRaw = data.filter(booking => booking.memberName && booking.memberName !== null);
         if (familyBookingsRaw.length > 0) {
@@ -123,13 +133,29 @@ export class ViewBookingComponent implements OnInit {
 
   deleteUserBooking(index: number) {
     const bookingId = this.userBookings[index].bookingId;
-    this.bookingDeleteService.deleteBooking(bookingId).subscribe({
+    const userId = this.currentUser ? JSON.parse(this.currentUser).userId : this.userId;
+    this.bookingDeleteService.deleteBooking(userId, bookingId).subscribe({
       next: () => {
-        this.userBookings.splice(index, 1);
-        alert('Booking cancelled and slot restored.');
+        this.getUserAndFamilyBookings();
+        setTimeout(() => {
+          const stillExists = this.userBookings.some(b => b.bookingId === bookingId);
+          if (!stillExists) {
+            alert('Booking cancelled successfully');
+          } else {
+            alert('Failed to delete booking.');
+          }
+        }, 500);
       },
       error: () => {
-        alert('Failed to delete booking.');
+        this.getUserAndFamilyBookings();
+        setTimeout(() => {
+          const stillExists = this.userBookings.some(b => b.bookingId === bookingId);
+          if (!stillExists) {
+            alert('Booking cancelled and slot restored.');
+          } else {
+            alert('Failed to delete booking.');
+          }
+        }, 500);
       }
     });
   }
@@ -139,11 +165,16 @@ export class ViewBookingComponent implements OnInit {
     const name = this.familyBookings[index].fullName;
     this.viewFamilyBookingService.deleteFamilyMember(memberId).subscribe({
       next: () => {
-        this.familyBookings.splice(index, 1);
         alert(`Family booking for ${name} deleted successfully.`);
+        this.getUserAndFamilyBookings();
       },
-      error: () => {
-        alert('Failed to delete family booking.');
+      error: (err) => {
+        if ([200, 204].includes(err.status)) {
+          alert(`Family booking for ${name} deleted successfully.`);
+          this.getUserAndFamilyBookings();
+        } else {
+          alert('Failed to delete family booking.');
+        }
       }
     });
   }

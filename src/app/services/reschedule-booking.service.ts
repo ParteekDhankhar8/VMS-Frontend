@@ -20,7 +20,7 @@ export interface RescheduleBookingData {
   providedIn: 'root'
 })
 export class RescheduleBookingService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Booking/reschedule'; // Replace with actual endpoint if different
+  private apiUrl = 'http://localhost:5001/api/Booking/reschedule'; // Replace with actual endpoint if different
 
   constructor(private http: HttpClient) {}
 

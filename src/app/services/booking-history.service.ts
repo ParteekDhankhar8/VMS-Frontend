@@ -16,7 +16,7 @@ export interface BookingHistory {
   providedIn: 'root'
 })
 export class BookingHistoryService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Booking';
+  private apiUrl = 'http://localhost:5001/api/Booking';
 
   constructor(private http: HttpClient) {}
 

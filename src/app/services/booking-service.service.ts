@@ -16,7 +16,7 @@ export class BookingServiceService {
 
   bookAppointment(booking: any): Observable<any> {
     // Try the most likely correct endpoint for booking creation
-    const url = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Booking/book';
+    const url = 'http://localhost:5001/api/Booking/book';
     return this.http.post(url, booking);
   }
 }

@@ -17,7 +17,7 @@ export interface RegisterFamilyMember {
   providedIn: 'root'
 })
 export class RegistedFamilyService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/FamilyMember';
+  private apiUrl = 'http://localhost:5001/api/FamilyMember';
 
   constructor(private http: HttpClient) {}
 

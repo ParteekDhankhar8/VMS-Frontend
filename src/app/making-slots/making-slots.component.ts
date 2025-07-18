@@ -21,15 +21,23 @@ export class MakingSlotsComponent implements OnInit {
   responseMsg = '';
   vaccines: Array<{vaccineId: number, name: string, description: string}> = [];
   showSuccessPopup = false;
+  minDateTime: string = '';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.fetchVaccines();
+    const now = new Date();
+    // Round up to next 5-minute interval
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+    const minutes = now.getMinutes();
+    now.setMinutes(minutes + (5 - (minutes % 5)) % 5);
+    this.minDateTime = now.toISOString().slice(0, 16); // Set minimum date to current date and time
   }
 
   fetchVaccines() {
-    const url = `https://f1h42csw-5136.inc1.devtunnels.ms/api/Vaccine?adminUserId=${this.adminUserId}`;
+    const url = `http://localhost:5001/api/Vaccine?adminUserId=${this.adminUserId}`;
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
         this.vaccines = data;
@@ -41,11 +49,17 @@ export class MakingSlotsComponent implements OnInit {
   }
 
   addSlot() {
-    const url = `https://f1h42csw-5136.inc1.devtunnels.ms/api/admin/dashboard/add-slot?adminUserId=${this.adminUserId}`;
+    // Prevent adding slot with past date/time
+    if (new Date(this.slotForm.slotDate) < new Date(this.minDateTime)) {
+      this.responseMsg = 'Cannot select a past date/time.';
+      return;
+    }
+    this.showSuccessPopup = true; // Always show popup for testing
+    const url = `http://localhost:5001/api/admin/dashboard/add-slot?adminUserId=${this.adminUserId}`;
     this.http.post(url, this.slotForm).subscribe({
       next: (res) => {
         console.log('Success:', res);
-        this.showSuccessPopup = true;
+        // this.showSuccessPopup = true; // Already set above
       },
       error: (err) => {
         console.error('Error:', err);

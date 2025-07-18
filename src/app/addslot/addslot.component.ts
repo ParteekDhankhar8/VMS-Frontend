@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DeleteService } from '../services/delete.service';
+import { EditSlotService } from '../services/editslot.service';
 
 interface SlotApiResponse {
   slotId: number;
@@ -25,15 +26,17 @@ export class AddslotComponent implements OnInit {
   slots: SlotApiResponse[] = [];
   searchText: string = '';
   adminUserId: number = 1; // Replace with actual admin user id from auth context if available
+  editIndex: number | null = null;
+  editSlotData: SlotApiResponse | null = null;
 
-  constructor(private http: HttpClient, private deleteService: DeleteService) {}
+  constructor(private http: HttpClient, private deleteService: DeleteService, private editSlotService: EditSlotService) {}
 
   ngOnInit(): void {
     this.fetchSlots();
   }
 
   fetchSlots() {
-    this.http.get('https://f1h42csw-5136.inc1.devtunnels.ms/api/Slot/available', { responseType: 'text' })
+    this.http.get('http://localhost:5001/api/Slot/available', { responseType: 'text' })
       .subscribe({
         next: (res: string) => {
           try {
@@ -68,6 +71,50 @@ export class AddslotComponent implements OnInit {
         console.error('Delete slot error:', err);
       }
     });
+  }
+
+  editSlot(slot: SlotApiResponse, index: number) {
+    this.editIndex = index;
+    this.editSlotData = { ...slot };
+  }
+
+  saveSlot(slot: SlotApiResponse) {
+    if (this.editSlotData && this.editIndex !== null) {
+      const updatedSlot: SlotApiResponse = {
+        slotId: this.editSlotData.slotId ?? slot.slotId,
+        vaccineName: this.editSlotData.vaccineName ?? slot.vaccineName,
+        locationCity: this.editSlotData.locationCity ?? slot.locationCity,
+        locationState: this.editSlotData.locationState ?? slot.locationState,
+        locationCountry: this.editSlotData.locationCountry ?? slot.locationCountry,
+        slotDate: this.editSlotData.slotDate ?? slot.slotDate,
+        availableCount: this.editSlotData.availableCount ?? slot.availableCount,
+        vaccinationCenterName: this.editSlotData.vaccinationCenterName ?? slot.vaccinationCenterName
+      };
+      this.editSlotService.editSlot(slot.slotId, this.adminUserId, updatedSlot).subscribe({
+        next: () => {
+          this.slots[this.editIndex!] = updatedSlot;
+          this.editIndex = null;
+          this.editSlotData = null;
+          alert('Slot updated successfully.');
+        },
+        error: (err) => {
+          if (err.status === 200 || err.status === 204) {
+            this.slots[this.editIndex!] = updatedSlot;
+            this.editIndex = null;
+            this.editSlotData = null;
+            alert('Slot updated successfully.');
+          } else {
+            alert('Failed to update slot.');
+            console.error('Edit slot error:', err);
+          }
+        }
+      });
+    }
+  }
+
+  cancelEdit() {
+    this.editIndex = null;
+    this.editSlotData = null;
   }
 
   get uniqueVaccineNames(): string[] {

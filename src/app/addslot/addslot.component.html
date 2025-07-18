@@ -20,15 +20,72 @@
       <tbody>
         <tr *ngFor="let slot of filteredSlots; let i = index">
           <td>{{ slot.slotId }}</td>
-          <td>{{ slot.vaccineName }}</td>
-          <td>{{ slot.locationCity }}</td>
-          <td>{{ slot.locationState }}</td>
-          <td>{{ slot.locationCountry }}</td>
-          <td>{{ slot.slotDate | date:'medium' }}</td>
-          <td>{{ slot.availableCount }}</td>
-          <td>{{ slot.vaccinationCenterName }}</td>
           <td>
-            <button class="btn btn-danger btn-sm" (click)="deleteSlot(slot.slotId, i)">Delete</button>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showVaccineName">
+              <input [(ngModel)]="editSlotData.vaccineName" class="form-control" style="width: 120px; display: inline-block;" />
+            </ng-container>
+            <ng-template #showVaccineName>
+              {{ slot.vaccineName }}
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showLocationCity">
+              <input [(ngModel)]="editSlotData.locationCity" class="form-control" style="width: 120px; display: inline-block;" />
+            </ng-container>
+            <ng-template #showLocationCity>
+              {{ slot.locationCity }}
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showLocationState">
+              <input [(ngModel)]="editSlotData.locationState" class="form-control" style="width: 120px; display: inline-block;" />
+            </ng-container>
+            <ng-template #showLocationState>
+              {{ slot.locationState }}
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showLocationCountry">
+              <input [(ngModel)]="editSlotData.locationCountry" class="form-control" style="width: 120px; display: inline-block;" />
+            </ng-container>
+            <ng-template #showLocationCountry>
+              {{ slot.locationCountry }}
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showSlotDate">
+              <input [(ngModel)]="editSlotData.slotDate" class="form-control" type="datetime-local" style="width: 180px; display: inline-block;" />
+            </ng-container>
+            <ng-template #showSlotDate>
+              {{ slot.slotDate | date:'medium' }}
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showAvailableCount">
+              <input [(ngModel)]="editSlotData.availableCount" class="form-control" type="number" style="width: 100px; display: inline-block;" />
+            </ng-container>
+            <ng-template #showAvailableCount>
+              {{ slot.availableCount }}
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showVaccinationCenterName">
+              <input [(ngModel)]="editSlotData.vaccinationCenterName" class="form-control" style="width: 180px; display: inline-block;" />
+            </ng-container>
+            <ng-template #showVaccinationCenterName>
+              {{ slot.vaccinationCenterName }}
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i && editSlotData; else showActions">
+              <button class="btn btn-success btn-sm ml-1" (click)="saveSlot(slot)">Save</button>
+              <button class="btn btn-secondary btn-sm ml-1" (click)="cancelEdit()">Cancel</button>
+            </ng-container>
+            <ng-template #showActions>
+              <button class="btn btn-danger btn-sm" (click)="deleteSlot(slot.slotId, i)">Delete</button>
+              
+              <button class="btn btn-primary btn-sm ml-2" (click)="editSlot(slot, i)">Edit</button>
+            </ng-template>
           </td>
         </tr>
       </tbody>

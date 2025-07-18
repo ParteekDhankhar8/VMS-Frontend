@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SlotService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Slot';
+  private apiUrl = 'http://localhost:5001/api/Slot';
 
   constructor(private http: HttpClient) {}
 

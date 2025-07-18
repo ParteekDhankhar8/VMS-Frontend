@@ -46,7 +46,7 @@ export class BookingComponent implements OnInit {
   }
 
   fetchSlots() {
-    this.http.get('https://f1h42csw-5136.inc1.devtunnels.ms/api/Slot/available', { responseType: 'text' })
+    this.http.get('http://localhost:5001/api/Slot/available', { responseType: 'text' })
       .subscribe({
         next: (res: string) => {
           try {
@@ -147,8 +147,14 @@ export class BookingComponent implements OnInit {
           this.router.navigate(['/view-booking']);
         },
         error: (err: any) => {
-          console.error('Booking error:', err);
-          alert('❌ Failed to book appointment. ' + (err?.error || 'Please try again.'));
+          if ([200, 201, 204].includes(err.status)) {
+            alert('✅ Appointment booked successfully!');
+            this.router.navigate(['/view-booking']);
+          } else {
+            console.error('Booking error:', err);
+            alert('Your appointment is alredy booked, delete previous booking to book new appointment.');
+            this.router.navigate(['/view-booking']);
+          }
         }
       });
     }

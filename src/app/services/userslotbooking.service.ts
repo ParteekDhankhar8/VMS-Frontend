@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserSlotBookingService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Slot/delete-booking';
+  private apiUrl = 'http://localhost:5001/api/Slot/delete-booking';
 
   constructor(private http: HttpClient) {}
 

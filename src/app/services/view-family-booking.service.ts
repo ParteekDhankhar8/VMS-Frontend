@@ -21,7 +21,7 @@ export interface FamilyMember {
   providedIn: 'root'
 })
 export class ViewFamilyBookingService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api';
+  private apiUrl = 'http://localhost:5001/api';
 
   constructor(private http: HttpClient) {}
 

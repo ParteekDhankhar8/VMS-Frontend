@@ -19,7 +19,7 @@ export interface FamilyMemberData {
   providedIn: 'root'
 })
 export class FamilyBookingService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Booking/book';
+  private apiUrl = 'http://localhost:5001/api/Booking/book';
 
   constructor(private http: HttpClient) {}
 

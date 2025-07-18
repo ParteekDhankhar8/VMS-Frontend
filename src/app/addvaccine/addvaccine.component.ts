@@ -34,7 +34,7 @@ export class AddvaccineComponent {
     this.addVaccineError = '';
     this.addVaccineSuccess = '';
     this.http.post(
-      'https://f1h42csw-5136.inc1.devtunnels.ms/api/Vaccine?adminUserId=1',
+      'http://localhost:5001/api/Vaccine?adminUserId=1',
       payload,
       { headers, responseType: 'text' }
     ).subscribe({

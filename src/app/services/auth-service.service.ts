@@ -22,7 +22,7 @@
 //   providedIn: 'root'
 // })
 // export class AuthServiceService {
-//   private baseUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/user/auth';
+//   private baseUrl = 'http://localhost:5001/api/user/auth';
  
 //   constructor(private http: HttpClient) {}
  
@@ -42,8 +42,8 @@ import { Observable }    from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private forgetUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/user/auth/forgot-password';
-  private resetUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/user/auth/reset-password';
+  private forgetUrl = 'http://localhost:5001/api/user/auth/forgot-password';
+  private resetUrl = 'http://localhost:5001/api/user/auth/reset-password';
 
   constructor(private http: HttpClient) {}
 

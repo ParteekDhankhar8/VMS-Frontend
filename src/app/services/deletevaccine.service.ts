@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DeleteVaccineService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Vaccine';
+  private apiUrl = 'http://localhost:5001/api/Vaccine';
 
   constructor(private http: HttpClient) {}
 

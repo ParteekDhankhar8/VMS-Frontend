@@ -15,8 +15,8 @@ export interface LoginPayload {
 export class LoginserviceService {
  
   // Replace these URLs with your actual backend endpoints
-  private adminLoginUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/admin/login';
-  private readonly userLoginUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/user/auth/login';
+  private adminLoginUrl = 'http://localhost:5001/api/admin/login';
+  private readonly userLoginUrl = 'http://localhost:5001/api/user/auth/login';
  
   constructor(private http: HttpClient) { }
  

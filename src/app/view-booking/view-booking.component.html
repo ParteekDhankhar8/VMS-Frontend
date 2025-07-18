@@ -14,7 +14,9 @@
               <th>Name</th>
               <th>Vaccine</th>
               <th>Date</th>
-              <th>Location</th>
+              <th>State</th>
+              <th>City</th>
+              <th>Vaccination Center</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -23,7 +25,9 @@
               <td>{{ userName }}</td>
               <td>{{ booking.vaccine || booking.vaccineName }}</td>
               <td>{{ booking.date || booking.slotDate | date:'medium' }}</td>
+              <td>{{ booking.location || booking.state || booking.locationState }}</td>
               <td>{{ booking.location || booking.city || booking.locationCity }}</td>
+              <td>{{ booking.vaccinationCenterName || booking.centerName }}</td>
               <td>
                 <div class="d-flex flex-wrap gap-1 justify-content-center">
                   <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteUserBooking(i)">Delete</button>

@@ -23,7 +23,7 @@ export interface SignupData {
 export class SignUpServiceService {
  
   // Your backend registration API URL
-  private readonly apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/user/register';  // Change to your actual URL
+  private readonly apiUrl = 'http://localhost:5001/api/user/register';  // Change to your actual URL
  
   constructor(private http: HttpClient) {}
  

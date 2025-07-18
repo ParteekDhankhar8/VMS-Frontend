@@ -18,7 +18,7 @@ export class UsertableComponent {
   }
 
   fetchBookings() {
-    const url = `https://f1h42csw-5136.inc1.devtunnels.ms/api/admin/dashboard/all-bookings?adminUserId=1`;
+    const url = `http://localhost:5001/api/admin/dashboard/all-bookings?adminUserId=1`;
     this.http.get(url, { responseType: 'text' }).subscribe({
       next: (res: string) => {
         try {

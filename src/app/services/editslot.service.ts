@@ -5,17 +5,15 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UserBookingService {
-  private apiUrl = 'http://localhost:5001/api/Vaccine';
+export class EditSlotService {
+  private apiUrl = 'http://localhost:5001/api/admin/dashboard/slot';
 
   constructor(private http: HttpClient) {}
 
-  deleteUserBooking(id: number, adminUserId: number): Observable<any> {
-    // Get token from localStorage if needed
+  editSlot(id: number, adminUserId: number, slotData: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
-    // Compose URL with path param and query param
     const url = `${this.apiUrl}/${id}?adminUserId=${adminUserId}`;
-    return this.http.delete(url, { headers });
+    return this.http.put(url, slotData, { headers });
   }
 }

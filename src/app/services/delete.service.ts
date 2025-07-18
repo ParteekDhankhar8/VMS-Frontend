@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DeleteService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/admin/dashboard/slot';
+  private apiUrl = 'http://localhost:5001/api/admin/dashboard/slot';
 
   constructor(private http: HttpClient) {}
 

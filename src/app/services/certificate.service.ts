@@ -15,7 +15,7 @@ export interface CertificateData {
   providedIn: 'root'
 })
 export class CertificateService {
-  private apiUrl = 'https://f1h42csw-5136.inc1.devtunnels.ms/api/Certificate'; // Replace with actual endpoint if different
+  private apiUrl = 'http://localhost:5001/api/Certificate'; // Replace with actual endpoint if different
 
   constructor(private http: HttpClient) {}
 
